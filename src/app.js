@@ -2,6 +2,7 @@ import express from 'express';
 import { SERVER_PORT } from './constant/env.constant.js';
 import { HTTP_STATUS } from './constant/http-status.constant.js';
 import { errorHandler } from './middlewares/error-handler.middleware.js';
+import './utils/prisma.util.js';
 
 const app = express();
 
