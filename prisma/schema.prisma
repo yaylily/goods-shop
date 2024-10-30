@@ -61,7 +61,6 @@ model Cart {
 model CartItem {
   cartItemId    Int      @id @default(autoincrement()) @map("cart_item_id")
   cartId        Int      @map("cart_id")
-  goodsId       Int      @map("goods_id")
   goodsOptionId Int      @map("goods_option_id")
   quantity      Int
   createdAt     DateTime @default(now()) @map("created_at")
@@ -90,7 +89,6 @@ model Order {
 model OrderItem {
   orderItemId   Int      @id @default(autoincrement()) @map("order_item_id")
   orderId       Int      @map("order_id")
-  goodsId       Int      @map("goods_id")
   goodsOptionId Int      @map("goods_option_id")
   goodsPrice    Int      @map("goods_price")
   quantity      Int
