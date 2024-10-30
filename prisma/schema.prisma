@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId      Int      @id @default(autoincrement()) @map("user_id")
+  email       String   @unique
+  password    String
+  name        String
+  phoneNumber String   @map("phone_number")
+  role        Role     @default(USER)
+  address     String
+  points      Int
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  Cart         Cart?
+  Orders       Order[]
+  RefreshToken RefreshToken?
+  PointsLogs   PointsLog[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model PointsLog {
+  logId     Int      @id @default(autoincrement()) @map("log_id")
+  userId    Int      @map("user_id")
+  orderId   Int      @unique @map("order_id")
+  points    Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  User  User  @relation(fields: [userId], references: [userId])
+  Order Order @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+
+  @@map("points_logs")
+}
+
+model Cart {
+  cartId    Int      @id @default(autoincrement()) @map("cart_id")
+  userId    Int      @unique @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  User      User       @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  CartItems CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  cartItemId    Int      @id @default(autoincrement()) @map("cart_item_id")
+  cartId        Int      @map("cart_id")
+  goodsId       Int      @map("goods_id")
+  goodsOptionId Int      @map("goods_option_id")
+  quantity      Int
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  Cart        Cart        @relation(fields: [cartId], references: [cartId], onDelete: Cascade)
+  GoodsOption GoodsOption @relation(fields: [goodsOptionId], references: [goodsOptionId], onDelete: Cascade)
+
+  @@map("cart_items")
+}
+
+model Order {
+  orderId    Int      @id @default(autoincrement()) @map("order_id")
+  userId     Int      @map("user_id")
+  totalPrice Int      @map("total_price")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  User       User        @relation(fields: [userId], references: [userId])
+  OrderItems OrderItem[]
+  PointsLog  PointsLog?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  orderItemId   Int      @id @default(autoincrement()) @map("order_item_id")
+  orderId       Int      @map("order_id")
+  goodsId       Int      @map("goods_id")
+  goodsOptionId Int      @map("goods_option_id")
+  goodsPrice    Int      @map("goods_price")
+  quantity      Int
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  Order        Order       @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  GoodsOptions GoodsOption @relation(fields: [goodsOptionId], references: [goodsOptionId], onDelete: Cascade)
+
+  @@map("order_items")
+}
+
+model Goods {
+  goodsId      Int      @id @default(autoincrement()) @map("goods_id")
+  goodsName    String   @map("goods_name")
+  description  String
+  price        Int
+  thumbnailImg String   @map("thumbnail_img")
+  detailImg    String   @map("detail_img")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  GoodsOptions GoodsOption[]
+
+  @@map("goods")
+}
+
+model GoodsOption {
+  goodsOptionId Int    @id @default(autoincrement()) @map("goods_option_id")
+  goodsId       Int    @map("goods_id")
+  optionName    String @map("option_name")
+  addPrice      Int    @map("add_price")
+  stock         Int
+
+  CartItem  CartItem[]
+  OrderItem OrderItem[]
+  Goods     Goods       @relation(fields: [goodsId], references: [goodsId])
+
+  @@map("goods_options")
+}
+
+model RefreshToken {
+  tokenId      Int      @id @default(autoincrement()) @map("token_id")
+  userId       Int      @unique @map("user_id")
+  refreshToken String   @map("refresh_token")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  User User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
