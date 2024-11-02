@@ -2,15 +2,20 @@ import express from 'express';
 import { SERVER_PORT } from './constant/env.constant.js';
 import { HTTP_STATUS } from './constant/http-status.constant.js';
 import { errorHandler } from './middlewares/error-handler.middleware.js';
+import './utils/prisma.util.js';
+import router from './router/router.js';
 
 const app = express();
 
+// app.use(LogMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/health-check', (req, res) => {
   return res.status(HTTP_STATUS.OK).send(`I'm healthy`);
 });
+
+app.use('/api', router);
 
 app.use(errorHandler);
 

@@ -19,10 +19,10 @@ model User {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
-  Cart         Cart?
-  Orders       Order[]
-  RefreshToken RefreshToken?
-  PointsLogs   PointsLog[]
+  cart         Cart?
+  orders       Order[]
+  refreshToken RefreshToken?
+  pointsLogs   PointsLog[]
 
   @@map("users")
 }
@@ -40,8 +40,8 @@ model PointsLog {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  User  User  @relation(fields: [userId], references: [userId])
-  Order Order @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [userId])
+  order Order @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
 
   @@map("points_logs")
 }
@@ -52,8 +52,8 @@ model Cart {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  User      User       @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  CartItems CartItem[]
+  user      User       @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  cartItems CartItem[]
 
   @@map("carts")
 }
@@ -61,14 +61,13 @@ model Cart {
 model CartItem {
   cartItemId    Int      @id @default(autoincrement()) @map("cart_item_id")
   cartId        Int      @map("cart_id")
-  goodsId       Int      @map("goods_id")
   goodsOptionId Int      @map("goods_option_id")
   quantity      Int
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
-  Cart        Cart        @relation(fields: [cartId], references: [cartId], onDelete: Cascade)
-  GoodsOption GoodsOption @relation(fields: [goodsOptionId], references: [goodsOptionId], onDelete: Cascade)
+  cart        Cart        @relation(fields: [cartId], references: [cartId], onDelete: Cascade)
+  goodsOption GoodsOption @relation(fields: [goodsOptionId], references: [goodsOptionId], onDelete: Cascade)
 
   @@map("cart_items")
 }
@@ -80,9 +79,9 @@ model Order {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
-  User       User        @relation(fields: [userId], references: [userId])
-  OrderItems OrderItem[]
-  PointsLog  PointsLog?
+  user       User        @relation(fields: [userId], references: [userId])
+  orderItems OrderItem[]
+  pointsLog  PointsLog?
 
   @@map("orders")
 }
@@ -90,15 +89,14 @@ model Order {
 model OrderItem {
   orderItemId   Int      @id @default(autoincrement()) @map("order_item_id")
   orderId       Int      @map("order_id")
-  goodsId       Int      @map("goods_id")
   goodsOptionId Int      @map("goods_option_id")
   goodsPrice    Int      @map("goods_price")
   quantity      Int
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
-  Order        Order       @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
-  GoodsOptions GoodsOption @relation(fields: [goodsOptionId], references: [goodsOptionId], onDelete: Cascade)
+  order        Order       @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  goodsOptions GoodsOption @relation(fields: [goodsOptionId], references: [goodsOptionId], onDelete: Cascade)
 
   @@map("order_items")
 }
@@ -113,7 +111,7 @@ model Goods {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  GoodsOptions GoodsOption[]
+  goodsOptions GoodsOption[]
 
   @@map("goods")
 }
@@ -125,9 +123,9 @@ model GoodsOption {
   addPrice      Int    @map("add_price")
   stock         Int
 
-  CartItem  CartItem[]
-  OrderItem OrderItem[]
-  Goods     Goods       @relation(fields: [goodsId], references: [goodsId])
+  cartItem  CartItem[]
+  orderItem OrderItem[]
+  goods     Goods       @relation(fields: [goodsId], references: [goodsId])
 
   @@map("goods_options")
 }
@@ -139,7 +137,7 @@ model RefreshToken {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  User User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   @@map("refresh_tokens")
 }

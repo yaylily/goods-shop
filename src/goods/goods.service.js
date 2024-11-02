@@ -1,0 +1,27 @@
+import { GoodsRepository } from './goods.repository.js';
+
+export class GoodsService {
+  goodsRepository = new GoodsRepository();
+
+  // 굿즈 생성
+  createGoods = async (goodsData, goodsOptions) => {
+    // 이미 존재하는 굿즈 이름인지 체크
+    // const existedGoodsName = await this.goodsRepository.findByGoodsName(
+    //   goodsData.goodsName,
+    // );
+
+    // // 동일 이름 존재할 시 에러
+    // if (existedGoodsName) {
+    //   throw new HttpError.BadRequest();
+    // }
+
+    // 메뉴 생성 - repository로 전달
+    const createdMGoods = await this.goodsRepository.createGoods(
+      goodsData,
+      goodsOptions,
+    );
+
+    //반환 전에 dto 만들기
+    return createdMGoods;
+  };
+}
