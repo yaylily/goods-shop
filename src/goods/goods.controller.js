@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '../constant/http-status.constant.js';
 import { MESSAGES } from '../constant/message.constant.js';
+import { GoodsResponseDto } from './dtos/goods.response.dto.js';
 import { GoodsService } from './goods.service.js';
 
 export class GoodsController {
@@ -25,6 +26,9 @@ export class GoodsController {
         goodsData,
         goodsOptions,
       );
+
+      // 굿즈 반환 DTO로 구성
+      const goodsResponseDto = new GoodsResponseDto(newGoods);
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
