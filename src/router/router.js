@@ -1,7 +1,8 @@
 import express from 'express';
+import { goodsRouter } from '../goods/goods.router.js';
 
-const router = express.Router();
+const apiRouter = express.Router();
 
-router.use('/goods', goodsRouter);
+apiRouter.use('/goods', goodsRouter);
 
-export default router;
+export default apiRouter;

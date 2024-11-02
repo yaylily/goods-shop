@@ -1,3 +1,4 @@
+import express from 'express';
 import { SERVER_PORT } from './constant/env.constant.js';
 import { HTTP_STATUS } from './constant/http-status.constant.js';
 import { errorHandler } from './middlewares/error-handler.middleware.js';
@@ -6,6 +7,7 @@ import router from './router/router.js';
 
 const app = express();
 
+// app.use(LogMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
