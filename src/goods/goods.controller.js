@@ -20,7 +20,6 @@ export class GoodsController {
       //req.body에서 options 배열 추출하여 선언
       const goodsOptions = req.body.goodsOptions;
 
-      console.log(goodsOptions);
       // 서비스로 goodsData와 goodsOptions 배열 넘기기
       const newGoods = await this.goodsService.createGoods(
         goodsData,

@@ -5,6 +5,7 @@ export const MESSAGES = {
     },
     CREATE: {
       SUCCEED: '굿즈 생성에 성공했습니다.',
+      EXISTED_NAME: '굿즈 이름이 이미 존재합니다.',
     },
   },
 };

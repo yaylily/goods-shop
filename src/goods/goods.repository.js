@@ -18,4 +18,13 @@ export class GoodsRepository {
 
     return createdGoods;
   };
+
+  // 굿즈 이름 조회
+  findByGoodsName = async (goodsName) => {
+    const existedGoodsName = await prisma.goods.findFirst({
+      where: { goodsName },
+    });
+
+    return existedGoodsName;
+  };
 }
