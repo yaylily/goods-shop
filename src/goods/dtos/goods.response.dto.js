@@ -1,12 +1,12 @@
 export class GoodsResponseDto {
-  constructor(
+  constructor({
     goodsName,
     description,
     price,
     thumbnailImg,
     detailImg,
     goodsOptions,
-  ) {
+  }) {
     this.goodsName = goodsName;
     this.description = description;
     this.price = price;
