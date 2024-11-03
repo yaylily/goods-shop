@@ -21,5 +21,8 @@ export const MESSAGES = {
         REQUIRED: '굿즈 상세 이미지를 업로드해 주세요.',
       },
     },
+    GET_LIST: {
+      SUCCEED: '굿즈 목록 불러오기에 성공했습니다.',
+    },
   },
 };

@@ -9,6 +9,7 @@ const goodsController = new GoodsController();
 goodsRouter.post('/', createGoodsValidator, goodsController.createGoods);
 
 // 굿즈 목록 조회
+goodsRouter.get('/', goodsController.getGoodsList);
 
 // 굿즈 상세 조회
 

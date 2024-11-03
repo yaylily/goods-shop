@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '../constant/http-status.constant.js';
 import { MESSAGES } from '../constant/message.constant.js';
+import { GoodsListResponseDto } from './dtos/goods-list.response.dto.js';
 import { GoodsResponseDto } from './dtos/goods.response.dto.js';
 import { GoodsService } from './goods.service.js';
 
@@ -41,6 +42,26 @@ export class GoodsController {
   };
 
   // 굿즈 목록 조회
+  getGoodsList = async (req, res, next) => {
+    try {
+      //service에서 데이터 불러오기
+      const goodsList = await this.goodsService.getGoodsList();
+
+      //굿즈 리스트 DTO로 반환
+      const goodsListResponseDto = goodsList.map(
+        (goods) => new GoodsListResponseDto(goods),
+      );
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.GOODS.GET_LIST.SUCCEED,
+        data: goodsListResponseDto,
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  };
 
   // 굿즈 상세 조회
 
