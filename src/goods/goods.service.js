@@ -25,4 +25,12 @@ export class GoodsService {
 
     return createdMGoods;
   };
+
+  // 굿즈 리스트 조회
+  getGoodsList = async () => {
+    //repository에서 굿즈 리스트 데이터 조회
+    const goodsList = await this.goodsRepository.getGoodsList();
+
+    return goodsList;
+  };
 }

@@ -17,6 +17,26 @@ const schema = Joi.object({
   detailImg: Joi.string().required().messages({
     'any.required': MESSAGES.GOODS.CREATE.DETAILIMG.REQUIRED,
   }),
+  goodsOptions: Joi.array()
+    .items(
+      Joi.object({
+        optionName: Joi.string().required().messages({
+          'any.required': MESSAGES.GOODS.CREATE.OPTIONS.OPTIONNAME.REQUIRED,
+        }),
+        addPrice: Joi.number().required().messages({
+          'any.required': MESSAGES.GOODS.CREATE.OPTIONS.ADDPRICE.REQUIRED,
+        }),
+        stock: Joi.number().required().messages({
+          'any.required': MESSAGES.GOODS.CREATE.OPTIONS.STOCK.REQUIRED,
+        }),
+      }),
+    )
+    .min(1)
+    .required()
+    .messages({
+      'array.min': MESSAGES.GOODS.CREATE.OPTIONS.MIN,
+      'any.required': MESSAGES.GOODS.CREATE.OPTIONS.REQUIRED,
+    }),
 });
 
 export const createGoodsValidator = async (req, res, next) => {

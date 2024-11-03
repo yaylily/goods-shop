@@ -27,4 +27,13 @@ export class GoodsRepository {
 
     return existedGoodsName;
   };
+
+  // 굿즈 리스트 조회
+  getGoodsList = async () => {
+    const goodsList = await prisma.goods.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return goodsList;
+  };
 }
