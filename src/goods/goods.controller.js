@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '../constant/http-status.constant.js';
 import { MESSAGES } from '../constant/message.constant.js';
+import { GoodsResponseDto } from './dtos/goods.response.dto.js';
 import { GoodsService } from './goods.service.js';
 
 export class GoodsController {
@@ -19,17 +20,19 @@ export class GoodsController {
       //req.body에서 options 배열 추출하여 선언
       const goodsOptions = req.body.goodsOptions;
 
-      console.log(goodsOptions);
       // 서비스로 goodsData와 goodsOptions 배열 넘기기
       const newGoods = await this.goodsService.createGoods(
         goodsData,
         goodsOptions,
       );
 
+      // 굿즈 DTO로 반환
+      const goodsResponseDto = new GoodsResponseDto(newGoods);
+
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
-        message: MESSAGES.GOODS.CREATE,
-        newGoods,
+        message: MESSAGES.GOODS.CREATE.SUCCEED,
+        data: goodsResponseDto,
       });
     } catch (err) {
       console.log(err);

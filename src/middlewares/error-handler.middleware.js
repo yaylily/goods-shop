@@ -3,8 +3,16 @@ import { HTTP_STATUS } from '../constant/http-status.constant.js';
 export const errorHandler = (err, req, res, next) => {
   console.error(err);
 
+  // Http Error 처리
+  if (err.status && err.message) {
+    return res.status(err.status).json({
+      status: err.status,
+      message: err.message,
+    });
+  }
+
   //joi에서 발생한 에러 처리
-  if (err.name === 'validationError') {
+  if (err.name === 'ValidationError') {
     return res.status(HTTP_STATUS.BAD_REQUEST).json({
       status: HTTP_STATUS.BAD_REQUEST,
       message: err.message,
