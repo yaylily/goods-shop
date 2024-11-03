@@ -14,7 +14,7 @@ export class GoodsService {
 
     // 동일 이름 존재할 시 에러
     if (existedGoodsName) {
-      throw new HttpError.BadRequest(MESSAGES.GOODS.CREATE.EXISTED_NAME);
+      throw new HttpError.BadRequest(MESSAGES.GOODS.COMMON.NAME_ALREADY_EXISTS);
     }
 
     // 메뉴 생성 - repository로 전달

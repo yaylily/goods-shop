@@ -26,13 +26,13 @@ export class GoodsController {
         goodsOptions,
       );
 
-      // 굿즈 반환 DTO로 구성
+      // 굿즈 DTO로 반환
       const goodsResponseDto = new GoodsResponseDto(newGoods);
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
-        message: MESSAGES.GOODS.CREATE,
-        newGoods,
+        message: MESSAGES.GOODS.CREATE.SUCCEED,
+        data: goodsResponseDto,
       });
     } catch (err) {
       console.log(err);

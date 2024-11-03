@@ -1,11 +1,12 @@
 import express from 'express';
 import { GoodsController } from './goods.controller.js';
+import { createGoodsValidator } from '../middlewares/validators/create-goods-validator.middleware.js';
 
 const goodsRouter = express.Router();
 const goodsController = new GoodsController();
 
 // 굿즈 생성
-goodsRouter.post('/', goodsController.createGoods);
+goodsRouter.post('/', createGoodsValidator, goodsController.createGoods);
 
 // 굿즈 목록 조회
 
