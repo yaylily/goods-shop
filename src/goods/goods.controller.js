@@ -86,6 +86,40 @@ export class GoodsController {
   };
 
   // 굿즈 수정
+  updateGoods = async (req, res, next) => {
+    try {
+      const { goodsId } = req.params;
+      //req.body에서 goods 데이터 추출하여 객체로 묶어주기
+      const goodsData = {
+        goodsName: req.body.goodsName,
+        description: req.body.description,
+        price: req.body.price,
+        thumbnailImg: req.body.thumbnailImg,
+        detailImg: req.body.detailImg,
+      };
+      //req.body에서 options 배열 추출하여 선언
+      const goodsOptions = req.body.goodsOptions;
+
+      // 서비스로 goodsData와 goodsOptions 배열 넘기기
+      const updatedGoods = await this.goodsService.updateGoods(
+        goodsId,
+        goodsData,
+        goodsOptions,
+      );
+
+      // 굿즈 DTO로 반환
+      const goodsResponseDto = new GoodsResponseDto(updatedGoods);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.GOODS.UPDATE_GOODS.SUCCEED,
+        DATA: goodsResponseDto,
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  };
 
   // 굿즈 삭제
 }

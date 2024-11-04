@@ -1,6 +1,7 @@
 import express from 'express';
 import { GoodsController } from './goods.controller.js';
 import { createGoodsValidator } from '../middlewares/validators/create-goods-validator.middleware.js';
+import { updateGoodsValidator } from '../middlewares/validators/update-goods-validator.middleware.js';
 
 const goodsRouter = express.Router();
 const goodsController = new GoodsController();
@@ -15,6 +16,11 @@ goodsRouter.get('/', goodsController.getGoodsList);
 goodsRouter.get('/:goodsId', goodsController.getGoodsDetail);
 
 // 굿즈 수정
+goodsRouter.patch(
+  '/:goodsId',
+  updateGoodsValidator,
+  goodsController.updateGoods,
+);
 
 //굿즈 삭제
 

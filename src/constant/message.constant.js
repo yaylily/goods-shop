@@ -41,5 +41,8 @@ export const MESSAGES = {
     GET_GOODS_DETAIL: {
       SUCCEED: '굿즈 상세 불러오기에 성공했습니다.',
     },
+    UPDATE_GOODS: {
+      SUCCEED: '굿즈 수정에 성공했습니다.',
+    },
   },
 };

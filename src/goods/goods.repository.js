@@ -48,4 +48,27 @@ export class GoodsRepository {
 
     return goodsDetail;
   };
+
+  //굿즈 수정
+  updateGoods = async (goodsId, goodsData) => {
+    return await prisma.goods.update({
+      where: { goodsId: +goodsId },
+      data: { ...goodsData },
+    });
+  };
+
+  //굿즈 옵션 수정
+  updateGoodsOptions = async (goodsId, goodsOptions) => {
+    await prisma.$transaction([
+      prisma.goodsOption.deleteMany({
+        where: { goodsId: +goodsId },
+      }),
+      prisma.goodsOption.createMany({
+        data: goodsOptions.map((option) => ({
+          goodsId: +goodsId,
+          ...option,
+        })),
+      }),
+    ]);
+  };
 }
