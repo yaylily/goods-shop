@@ -12,6 +12,7 @@ goodsRouter.post('/', createGoodsValidator, goodsController.createGoods);
 goodsRouter.get('/', goodsController.getGoodsList);
 
 // 굿즈 상세 조회
+goodsRouter.get('/:goodsId', goodsController.getGoodsDetail);
 
 // 굿즈 수정
 

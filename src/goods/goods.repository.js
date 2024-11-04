@@ -36,4 +36,16 @@ export class GoodsRepository {
 
     return goodsList;
   };
+
+  // 굿즈 상세 조회
+  getGoodsById = async (goodsId) => {
+    const goodsDetail = await prisma.goods.findFirst({
+      where: { goodsId: +goodsId },
+      include: {
+        goodsOptions: true,
+      },
+    });
+
+    return goodsDetail;
+  };
 }

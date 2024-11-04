@@ -2,6 +2,7 @@ export const MESSAGES = {
   GOODS: {
     COMMON: {
       NAME_ALREADY_EXISTS: '굿즈 이름이 이미 존재합니다.',
+      NOT_FOUND: '해당 굿즈가 존재하지 않습니다.',
     },
     CREATE: {
       SUCCEED: '굿즈 생성에 성공했습니다.',
@@ -36,6 +37,9 @@ export const MESSAGES = {
     },
     GET_LIST: {
       SUCCEED: '굿즈 목록 불러오기에 성공했습니다.',
+    },
+    GET_GOODS_DETAIL: {
+      SUCCEED: '굿즈 상세 불러오기에 성공했습니다.',
     },
   },
 };

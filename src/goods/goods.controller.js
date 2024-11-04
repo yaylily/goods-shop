@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '../constant/http-status.constant.js';
 import { MESSAGES } from '../constant/message.constant.js';
+import { prisma } from '../utils/prisma.util.js';
 import { GoodsListResponseDto } from './dtos/goods-list.response.dto.js';
 import { GoodsResponseDto } from './dtos/goods.response.dto.js';
 import { GoodsService } from './goods.service.js';
@@ -64,6 +65,25 @@ export class GoodsController {
   };
 
   // 굿즈 상세 조회
+  getGoodsDetail = async (req, res, next) => {
+    try {
+      const { goodsId } = req.params;
+
+      const goodsDetail = await this.goodsService.getGoodsById(goodsId);
+
+      // 굿즈 DTO로 반환
+      const goodsResponseDto = new GoodsResponseDto(goodsDetail);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.GOODS.GET_GOODS_DETAIL.SUCCEED,
+        data: goodsResponseDto,
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  };
 
   // 굿즈 수정
 

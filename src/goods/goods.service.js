@@ -33,4 +33,17 @@ export class GoodsService {
 
     return goodsList;
   };
+
+  // 굿즈 디테일 조회
+  getGoodsById = async (goodsId) => {
+    //repository에서 굿즈 상세 데이터 조회
+    const goodsDetail = await this.goodsRepository.getGoodsById(goodsId);
+
+    // 존재하는 굿즈인지 확인
+    if (!goodsDetail) {
+      throw new HttpError.BadRequest(MESSAGES.GOODS.COMMON.NOT_FOUND);
+    }
+
+    return goodsDetail;
+  };
 }
