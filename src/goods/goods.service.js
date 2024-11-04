@@ -49,6 +49,12 @@ export class GoodsService {
 
   // 굿즈 수정
   updateGoods = async (goodsId, goodsData, goodsOptions) => {
+    //굿즈가 존재하는지 확인
+    const goods = await this.goodsRepository.getGoodsById(goodsId);
+    if (!goods) {
+      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.NOT_FOUND);
+    }
+
     await this.goodsRepository.updateGoods(goodsId, goodsData);
 
     //굿즈 옵션 수정 있을 경우에 repository 전달
@@ -57,6 +63,25 @@ export class GoodsService {
     }
 
     // 옵션 포함 수정 후 굿즈 조회
+    const updatedGoods = await this.goodsRepository.getGoodsById(goodsId);
+
+    return updatedGoods;
+  };
+
+  // 굿즈 재고 수정
+  updateStock = async (goodsId, goodsOptionId, stock) => {
+    //굿즈 옵션이 존재하는지 확인
+    const goodsOption =
+      await this.goodsRepository.findGoodsOptionById(goodsOptionId);
+    if (!goodsOption) {
+      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.OPTION_NOT_FOUND);
+    }
+    console.log(goodsOption);
+
+    // 굿즈 재고 업데이트
+    await this.goodsRepository.updateStock(goodsOptionId, stock);
+
+    // 재고 수정 후 굿즈 조회
     const updatedGoods = await this.goodsRepository.getGoodsById(goodsId);
 
     return updatedGoods;

@@ -3,6 +3,7 @@ export const MESSAGES = {
     COMMON: {
       NAME_ALREADY_EXISTS: '굿즈 이름이 이미 존재합니다.',
       NOT_FOUND: '해당 굿즈가 존재하지 않습니다.',
+      OPTION_NOT_FOUND: '해당 굿즈 옵션이 존재하지 않습니다.',
     },
     CREATE: {
       SUCCEED: '굿즈 생성에 성공했습니다.',
@@ -58,6 +59,10 @@ export const MESSAGES = {
         },
         MIN: '최소한 하나의 옵션을 추가해야 합니다.',
       },
+    },
+    UPDATE_STOCK: {
+      SUCCEED: '굿즈 재고 수정에 성공했습니다.',
+      REQUIRED: '재고 수량을 입력해주세요.',
     },
   },
 };

@@ -71,4 +71,21 @@ export class GoodsRepository {
       }),
     ]);
   };
+
+  //굿즈 재고 수정
+  updateStock = async (goodsOptionId, stock) => {
+    const updatedGoods = await prisma.goodsOption.update({
+      where: { goodsOptionId: +goodsOptionId },
+      data: { stock },
+    });
+
+    return updatedGoods;
+  };
+
+  // 굿즈 옵션 조회
+  findGoodsOptionById = async (goodsOptionId) => {
+    return await prisma.goodsOption.findFirst({
+      where: { goodsOptionId: +goodsOptionId },
+    });
+  };
 }

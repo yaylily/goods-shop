@@ -121,5 +121,31 @@ export class GoodsController {
     }
   };
 
+  // 굿즈 재고 수정
+  updateStock = async (req, res, next) => {
+    try {
+      const { goodsId, goodsOptionId } = req.params;
+      const { stock } = req.body;
+
+      //서비스로 값 전달하여 업데이트 수행
+      const updatedGoods = await this.goodsService.updateStock(
+        goodsId,
+        goodsOptionId,
+        stock,
+      );
+
+      // 굿즈 DTO로 반환
+      const goodsResponseDto = new GoodsResponseDto(updatedGoods);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.GOODS.UPDATE_STOCK.SUCCEED,
+        data: goodsResponseDto,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   // 굿즈 삭제
 }

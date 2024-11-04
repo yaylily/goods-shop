@@ -2,6 +2,7 @@ import express from 'express';
 import { GoodsController } from './goods.controller.js';
 import { createGoodsValidator } from '../middlewares/validators/create-goods-validator.middleware.js';
 import { updateGoodsValidator } from '../middlewares/validators/update-goods-validator.middleware.js';
+import { updateStockValidator } from '../middlewares/validators/update-stock-validator.middleware.js';
 
 const goodsRouter = express.Router();
 const goodsController = new GoodsController();
@@ -20,6 +21,13 @@ goodsRouter.patch(
   '/:goodsId',
   updateGoodsValidator,
   goodsController.updateGoods,
+);
+
+// 재고 수정
+goodsRouter.patch(
+  '/:goodsId/goodsOptions/:goodsOptionId',
+  updateStockValidator,
+  goodsController.updateStock,
 );
 
 //굿즈 삭제
