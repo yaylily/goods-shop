@@ -43,6 +43,21 @@ export const MESSAGES = {
     },
     UPDATE_GOODS: {
       SUCCEED: '굿즈 수정에 성공했습니다.',
+      OPTIONS: {
+        GOODS_ID: {
+          REQUIRED: '굿즈ID를 입력해주세요.',
+        },
+        OPTIONNAME: {
+          REQUIRED: '옵션 이름을 입력해 주세요.',
+        },
+        ADDPRICE: {
+          REQUIRED: '추가 가격을 입력해 주세요.',
+        },
+        STOCK: {
+          REQUIRED: '재고 수량을 입력해주세요.',
+        },
+        MIN: '최소한 하나의 옵션을 추가해야 합니다.',
+      },
     },
   },
 };
