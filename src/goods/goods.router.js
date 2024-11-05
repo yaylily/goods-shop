@@ -31,5 +31,6 @@ goodsRouter.patch(
 );
 
 //굿즈 삭제
+goodsRouter.delete('/:goodsId', goodsController.goodsDelete);
 
 export { goodsRouter };

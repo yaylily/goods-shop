@@ -41,7 +41,7 @@ export class GoodsService {
 
     // 존재하는 굿즈인지 확인
     if (!goodsDetail) {
-      throw new HttpError.BadRequest(MESSAGES.GOODS.COMMON.NOT_FOUND);
+      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.NOT_FOUND);
     }
 
     return goodsDetail;
@@ -76,7 +76,6 @@ export class GoodsService {
     if (!goodsOption) {
       throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.OPTION_NOT_FOUND);
     }
-    console.log(goodsOption);
 
     // 굿즈 재고 업데이트
     await this.goodsRepository.updateStock(goodsOptionId, stock);
@@ -85,5 +84,18 @@ export class GoodsService {
     const updatedGoods = await this.goodsRepository.getGoodsById(goodsId);
 
     return updatedGoods;
+  };
+
+  // 굿즈 삭제
+  deleteGoods = async (goodsId) => {
+    //굿즈가 존재하는지 확인
+    const goods = await this.goodsRepository.getGoodsById(goodsId);
+
+    if (!goods) {
+      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.NOT_FOUND);
+    }
+
+    //repository에서 굿즈 삭제
+    await this.goodsRepository.deleteGoods(goodsId);
   };
 }

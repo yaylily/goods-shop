@@ -88,4 +88,19 @@ export class GoodsRepository {
       where: { goodsOptionId: +goodsOptionId },
     });
   };
+
+  // 굿즈 삭제
+  deleteGoods = async (goodsId) => {
+    await prisma.$transaction([
+      //goodsOption 먼저 삭제
+      prisma.goodsOption.deleteMany({
+        where: { goodsId: +goodsId },
+      }),
+
+      //goods 삭제
+      prisma.goods.delete({
+        where: { goodsId: +goodsId },
+      }),
+    ]);
+  };
 }

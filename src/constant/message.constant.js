@@ -64,5 +64,8 @@ export const MESSAGES = {
       SUCCEED: '굿즈 재고 수정에 성공했습니다.',
       REQUIRED: '재고 수량을 입력해주세요.',
     },
+    DELETE_GOODS: {
+      SUCCEED: '굿즈 삭제에 성공했습니다.',
+    },
   },
 };
