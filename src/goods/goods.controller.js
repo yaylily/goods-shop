@@ -7,6 +7,11 @@ import { GoodsService } from './goods.service.js';
 export class GoodsController {
   goodsService = new GoodsService();
 
+  // goods 데이터 DTO 형식으로 반환
+  formatGoodsResponseDto(goods) {
+    return new GoodsResponseDto(goods);
+  }
+
   // 굿즈 생성
   createGoods = async (req, res, next) => {
     try {
@@ -28,7 +33,7 @@ export class GoodsController {
       );
 
       // 굿즈 DTO로 반환
-      const goodsResponseDto = new GoodsResponseDto(newGoods);
+      const goodsResponseDto = this.formatGoodsResponseDto(newGoods);
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
@@ -71,7 +76,7 @@ export class GoodsController {
       const goodsDetail = await this.goodsService.getGoodsById(goodsId);
 
       // 굿즈 DTO로 반환
-      const goodsResponseDto = new GoodsResponseDto(goodsDetail);
+      const goodsResponseDto = this.formatGoodsResponseDto(goodsDetail);
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
@@ -107,7 +112,7 @@ export class GoodsController {
       );
 
       // 굿즈 DTO로 반환
-      const goodsResponseDto = new GoodsResponseDto(updatedGoods);
+      const goodsResponseDto = this.formatGoodsResponseDto(updatedGoods);
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
@@ -134,7 +139,7 @@ export class GoodsController {
       );
 
       // 굿즈 DTO로 반환
-      const goodsResponseDto = new GoodsResponseDto(updatedGoods);
+      const goodsResponseDto = this.formatGoodsResponseDto(updatedGoods);
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,

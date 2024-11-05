@@ -5,6 +5,15 @@ import { HttpError } from '../errors/http-error.js';
 export class GoodsService {
   goodsRepository = new GoodsRepository();
 
+  // 굿즈 디테일 조회 & 굿즈 존재 여부 검증
+  getGoodsById = async (goodsId) => {
+    const goods = await this.goodsRepository.getGoodsById(goodsId);
+    if (!goods) {
+      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.NOT_FOUND);
+    }
+    return goods;
+  };
+
   // 굿즈 생성
   createGoods = async (goodsData, goodsOptions) => {
     //이미 존재하는 굿즈 이름인지 체크
@@ -17,7 +26,7 @@ export class GoodsService {
       throw new HttpError.BadRequest(MESSAGES.GOODS.COMMON.NAME_ALREADY_EXISTS);
     }
 
-    // 메뉴 생성 - repository로 전달
+    // 메뉴 생성 repository로 전달
     const createdMGoods = await this.goodsRepository.createGoods(
       goodsData,
       goodsOptions,
@@ -34,26 +43,10 @@ export class GoodsService {
     return goodsList;
   };
 
-  // 굿즈 디테일 조회
-  getGoodsById = async (goodsId) => {
-    //repository에서 굿즈 상세 데이터 조회
-    const goodsDetail = await this.goodsRepository.getGoodsById(goodsId);
-
-    // 존재하는 굿즈인지 확인
-    if (!goodsDetail) {
-      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.NOT_FOUND);
-    }
-
-    return goodsDetail;
-  };
-
   // 굿즈 수정
   updateGoods = async (goodsId, goodsData, goodsOptions) => {
     //굿즈가 존재하는지 확인
-    const goods = await this.goodsRepository.getGoodsById(goodsId);
-    if (!goods) {
-      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.NOT_FOUND);
-    }
+    await this.getGoodsById(goodsId);
 
     await this.goodsRepository.updateGoods(goodsId, goodsData);
 
@@ -89,11 +82,7 @@ export class GoodsService {
   // 굿즈 삭제
   deleteGoods = async (goodsId) => {
     //굿즈가 존재하는지 확인
-    const goods = await this.goodsRepository.getGoodsById(goodsId);
-
-    if (!goods) {
-      throw new HttpError.NotFound(MESSAGES.GOODS.COMMON.NOT_FOUND);
-    }
+    await this.getGoodsById(goodsId);
 
     //repository에서 굿즈 삭제
     await this.goodsRepository.deleteGoods(goodsId);
