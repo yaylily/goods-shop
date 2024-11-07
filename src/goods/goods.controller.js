@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '../constant/http-status.constant.js';
 import { MESSAGES } from '../constant/message.constant.js';
+import { HttpError } from '../errors/http-error.js';
 import { GoodsListResponseDto } from './dtos/goods-list.response.dto.js';
 import { GoodsResponseDto } from './dtos/goods.response.dto.js';
 import { GoodsService } from './goods.service.js';
@@ -15,13 +16,23 @@ export class GoodsController {
   // 굿즈 생성
   createGoods = async (req, res, next) => {
     try {
+      const { goodsName, description, price } = req.body;
+      const thumbnailImg = req.files['thumbnailImg']?.[0]?.location;
+      const detailImg = req.files['detailImg']?.[0].location;
+      console.log(`알이큐쩜파일${req.files['thumbnailImg']}`);
+      // 이미지 없을 경우 오류
+      if (!thumbnailImg || !detailImg) {
+        throw new HttpError.BadRequest(
+          MESSAGES.GOODS.UPLOAD_IMG.REQUIRED_FILES_MISSING,
+        );
+      }
       //req.body에서 goods 데이터 추출하여 객체로 묶어주기
       const goodsData = {
-        goodsName: req.body.goodsName,
-        description: req.body.description,
-        price: req.body.price,
-        thumbnailImg: req.body.thumbnailImg,
-        detailImg: req.body.detailImg,
+        goodsName,
+        description,
+        price: +price,
+        thumbnailImg,
+        detailImg,
       };
       //req.body에서 options 배열 추출하여 선언
       const goodsOptions = req.body.goodsOptions;
