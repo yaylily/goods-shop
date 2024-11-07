@@ -67,5 +67,10 @@ export const MESSAGES = {
     DELETE_GOODS: {
       SUCCEED: '굿즈 삭제에 성공했습니다.',
     },
+    UPLOAD_IMG: {
+      NOT_SUPPORT: '지원하지 않는 확장자 파일입니다.',
+      REQUIRED_FILES_MISSING:
+        '이미지 파일이 정상적으로 업로드되지 않았습니다. 다시 시도해 주세요.',
+    },
   },
 };

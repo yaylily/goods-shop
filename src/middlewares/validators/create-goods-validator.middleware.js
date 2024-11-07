@@ -11,19 +11,19 @@ const schema = Joi.object({
   price: Joi.number().required().messages({
     'any.required': MESSAGES.GOODS.CREATE.PRICE.REQUIRED,
   }),
-  thumbnailImg: Joi.string().required().messages({
-    'any.required': MESSAGES.GOODS.CREATE.THUMBNAILIMG.REQUIRED,
-  }),
-  detailImg: Joi.string().required().messages({
-    'any.required': MESSAGES.GOODS.CREATE.DETAILIMG.REQUIRED,
-  }),
+  // thumbnailImg: Joi.string().required().messages({
+  //   'any.required': MESSAGES.GOODS.CREATE.THUMBNAILIMG.REQUIRED,
+  // }),
+  // detailImg: Joi.string().required().messages({
+  //   'any.required': MESSAGES.GOODS.CREATE.DETAILIMG.REQUIRED,
+  // }),
   goodsOptions: Joi.array()
     .items(
       Joi.object({
         optionName: Joi.string().required().messages({
           'any.required': MESSAGES.GOODS.CREATE.OPTIONS.OPTIONNAME.REQUIRED,
         }),
-        addPrice: Joi.number().required().messages({
+        addPrice: Joi.string().required().messages({
           'any.required': MESSAGES.GOODS.CREATE.OPTIONS.ADDPRICE.REQUIRED,
         }),
         stock: Joi.number().required().messages({
