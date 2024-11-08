@@ -23,7 +23,7 @@ const schema = Joi.object({
         optionName: Joi.string().required().messages({
           'any.required': MESSAGES.GOODS.CREATE.OPTIONS.OPTIONNAME.REQUIRED,
         }),
-        addPrice: Joi.string().required().messages({
+        addPrice: Joi.number().required().messages({
           'any.required': MESSAGES.GOODS.CREATE.OPTIONS.ADDPRICE.REQUIRED,
         }),
         stock: Joi.number().required().messages({

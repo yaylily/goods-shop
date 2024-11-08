@@ -4,6 +4,7 @@ import { HttpError } from '../errors/http-error.js';
 import { GoodsListResponseDto } from './dtos/goods-list.response.dto.js';
 import { GoodsResponseDto } from './dtos/goods.response.dto.js';
 import { GoodsService } from './goods.service.js';
+import { deleteImageFromS3 } from '../utils/s3.util.js';
 
 export class GoodsController {
   goodsService = new GoodsService();
@@ -15,11 +16,12 @@ export class GoodsController {
 
   // 굿즈 생성
   createGoods = async (req, res, next) => {
+    let thumbnailImg, detailImg;
     try {
       const { goodsName, description, price } = req.body;
-      const thumbnailImg = req.files['thumbnailImg']?.[0]?.location;
-      const detailImg = req.files['detailImg']?.[0].location;
-      console.log(`알이큐쩜파일${req.files['thumbnailImg']}`);
+      thumbnailImg = req.files['thumbnailImg']?.[0]?.location;
+      detailImg = req.files['detailImg']?.[0].location;
+
       // 이미지 없을 경우 오류
       if (!thumbnailImg || !detailImg) {
         throw new HttpError.BadRequest(
@@ -52,6 +54,8 @@ export class GoodsController {
         data: goodsResponseDto,
       });
     } catch (err) {
+      if (thumbnailImg) deleteImageFromS3(thumbnailImg);
+      if (detailImg) deleteImageFromS3(detailImg);
       console.log(err);
       next(err);
     }

@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import path from 'path';
+import { nextTick } from 'process';
 import {
   AWS_REGION,
   AWS_ACCESS_KEY_ID,
@@ -50,3 +51,26 @@ export const uploadFields = uploadToS3.fields([
   { name: 'thumbnailImg', maxCount: 1 },
   { name: 'detailImg', maxCount: 1 },
 ]);
+
+// 이미지 삭제 함수
+export const deleteImageFromS3 = async (imageUrl) => {
+  const extractKeyFromUrl = (url) => {
+    const s3Domain = `https://${AWS_BUCKET}.s3.${AWS_REGION}.amazonaws.com/`;
+    return url.replace(s3Domain, '');
+  };
+
+  const imageKey = extractKeyFromUrl(imageUrl);
+
+  const params = {
+    Bucket: AWS_BUCKET,
+    Key: imageKey,
+  };
+
+  try {
+    await s3.deleteObject(params).promise();
+    console.log(`이미지가 성공적으로 삭제되었습니다. ${imageKey}`);
+  } catch (err) {
+    console.log(`이미지 삭제가 실패했습니다. ${imageKey}`);
+    throw new HttpError.InternalServerError(MESSAGES.S3.IMG_DELETE.FAIL);
+  }
+};
