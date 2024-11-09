@@ -1,6 +1,7 @@
 import { HTTP_STATUS } from '../../constant/http-status.constant.js';
 import { MESSAGES } from '../../constant/message.constant.js';
 import { AuthService } from '../services/auth.service.js';
+import { UserResponseDto } from '../dtos/user.response.dto.js';
 
 export class AuthController {
   authService = new AuthService();
@@ -19,10 +20,12 @@ export class AuthController {
         address,
       );
 
+      const userResponseDto = new UserResponseDto(user);
+
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
         message: MESSAGES.USERS.AUTH.SIGN_UP.SUCCEED,
-        data: user,
+        data: userResponseDto,
       });
     } catch (err) {
       next(err);
