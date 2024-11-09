@@ -1,8 +1,8 @@
 import express from 'express';
 import { GoodsController } from './goods.controller.js';
-import { createGoodsValidator } from '../middlewares/validators/create-goods-validator.middleware.js';
-import { updateGoodsValidator } from '../middlewares/validators/update-goods-validator.middleware.js';
-import { updateStockValidator } from '../middlewares/validators/update-stock-validator.middleware.js';
+import { createGoodsDTO } from './dtos/create-goods.dto.js';
+import { updateGoodsDTO } from './dtos/update-goods.dto.js';
+import { updateStockDTO } from './dtos/update-stock.dto.js';
 import { uploadFields } from '../utils/s3.util.js';
 
 const goodsRouter = express.Router();
@@ -12,7 +12,7 @@ const goodsController = new GoodsController();
 goodsRouter.post(
   '/',
   uploadFields,
-  createGoodsValidator,
+  createGoodsDTO,
   goodsController.createGoods,
 );
 
@@ -23,16 +23,12 @@ goodsRouter.get('/', goodsController.getGoodsList);
 goodsRouter.get('/:goodsId', goodsController.getGoodsDetail);
 
 // 굿즈 수정
-goodsRouter.patch(
-  '/:goodsId',
-  updateGoodsValidator,
-  goodsController.updateGoods,
-);
+goodsRouter.patch('/:goodsId', updateGoodsDTO, goodsController.updateGoods);
 
 // 재고 수정
 goodsRouter.patch(
   '/:goodsId/goodsOptions/:goodsOptionId',
-  updateStockValidator,
+  updateStockDTO,
   goodsController.updateStock,
 );
 

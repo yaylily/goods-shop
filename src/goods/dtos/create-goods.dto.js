@@ -39,7 +39,7 @@ const schema = Joi.object({
     }),
 });
 
-export const createGoodsValidator = async (req, res, next) => {
+export const createGoodsDTO = async (req, res, next) => {
   try {
     await schema.validateAsync(req.body);
     next();
