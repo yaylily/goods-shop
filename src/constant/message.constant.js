@@ -6,6 +6,7 @@ export const MESSAGES = {
           REQUIRED: '이메일을 입력해 주세요.',
           INVALID_FORMAT: '이메일 형식이 올바르지 않습니다.',
           DUPLICATED: '이미 존재하는 이메일 입니다.',
+          NOT_FOUND: '해당 이메일로 가입된 유저를 찾을 수 없습니다.',
         },
         PASSWORD: {
           REQUIRED: '비밀번호를 입력해 주세요.',
@@ -25,9 +26,13 @@ export const MESSAGES = {
         ADRESS: {
           REQUIRED: '주소를 입력해 주세요.',
         },
+        UNAUTORIZED: '인증 정보가 유효하지 않습니다.',
       },
       SIGN_UP: {
         SUCCEED: '회원가입에 성공했습니다.',
+      },
+      SIGN_IN: {
+        SUCCEED: '로그인에 성공했습니다.',
       },
     },
   },

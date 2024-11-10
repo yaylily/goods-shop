@@ -1,6 +1,7 @@
 import express from 'express';
 import { AuthController } from '../controllers/auth.controller.js';
 import { signUpDTO } from '../dtos/sign-up.dto.js';
+import { signInDTO } from '../dtos/sign-in.dto.js';
 
 const authRouter = express.Router();
 const authController = new AuthController();
@@ -9,6 +10,7 @@ const authController = new AuthController();
 authRouter.post('/sign-up', signUpDTO, authController.signUp);
 
 // 로그인
+authRouter.post('/sign-in', signInDTO, authController.signIn);
 
 // 로그아웃
 
