@@ -18,7 +18,7 @@ export class GoodsService {
   createGoods = async (goodsData, goodsOptions) => {
     //이미 존재하는 굿즈 이름인지 체크
     const existedGoodsName = await this.goodsRepository.findByGoodsName(
-      goodsData.goodsName,
+      goodsData.goodsName
     );
 
     // 동일 이름 존재할 시 에러
@@ -29,7 +29,7 @@ export class GoodsService {
     // 메뉴 생성 repository로 전달
     const createdMGoods = await this.goodsRepository.createGoods(
       goodsData,
-      goodsOptions,
+      goodsOptions
     );
 
     return createdMGoods;

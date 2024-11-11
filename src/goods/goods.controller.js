@@ -25,7 +25,7 @@ export class GoodsController {
       // 이미지 없을 경우 오류
       if (!thumbnailImg || !detailImg) {
         throw new HttpError.BadRequest(
-          MESSAGES.GOODS.UPLOAD_IMG.REQUIRED_FILES_MISSING,
+          MESSAGES.GOODS.UPLOAD_IMG.REQUIRED_FILES_MISSING
         );
       }
       //req.body에서 goods 데이터 추출하여 객체로 묶어주기
@@ -42,7 +42,7 @@ export class GoodsController {
       // 서비스로 goodsData와 goodsOptions 배열 넘기기
       const newGoods = await this.goodsService.createGoods(
         goodsData,
-        goodsOptions,
+        goodsOptions
       );
 
       // 굿즈 DTO로 반환
@@ -69,7 +69,7 @@ export class GoodsController {
 
       //굿즈 리스트 DTO로 반환
       const goodsListResponseDto = goodsList.map(
-        (goods) => new GoodsListResponseDto(goods),
+        (goods) => new GoodsListResponseDto(goods)
       );
 
       return res.status(HTTP_STATUS.OK).json({
@@ -123,7 +123,7 @@ export class GoodsController {
       const updatedGoods = await this.goodsService.updateGoods(
         goodsId,
         goodsData,
-        goodsOptions,
+        goodsOptions
       );
 
       // 굿즈 DTO로 반환
@@ -150,7 +150,7 @@ export class GoodsController {
       const updatedGoods = await this.goodsService.updateStock(
         goodsId,
         goodsOptionId,
-        stock,
+        stock
       );
 
       // 굿즈 DTO로 반환
