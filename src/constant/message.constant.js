@@ -42,6 +42,9 @@ export const MESSAGES = {
         SUCCEED: '로그인에 성공했습니다.',
       },
     },
+    READ_ME: {
+      SUCCEED: '내정보 조회에 성공했습니다.',
+    },
   },
   GOODS: {
     COMMON: {
