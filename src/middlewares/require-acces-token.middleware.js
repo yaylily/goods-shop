@@ -34,10 +34,14 @@ export const requireAccessToken = async (req, res, next) => {
     } catch (err) {
       // accessToken 유효기간 지난 경우
       if (err.name === 'TokenExpiredError') {
-        throw HttpError.Unauthorized(MESSAGES.USERS.AUTH.COMMON.JWT.EXPIRED);
+        throw new HttpError.Unauthorized(
+          MESSAGES.USERS.AUTH.COMMON.JWT.EXPIRED
+        );
       } else {
         // 그 외 accessToken 검증 실패한 경우
-        throw HttpError.Unauthorized(MESSAGES.USERS.AUTH.COMMON.JWT.INVALID);
+        throw new HttpError.Unauthorized(
+          MESSAGES.USERS.AUTH.COMMON.JWT.INVALID
+        );
       }
     }
 
