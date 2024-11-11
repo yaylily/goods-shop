@@ -5,6 +5,7 @@ import { updateGoodsDTO } from './dtos/update-goods.dto.js';
 import { updateStockDTO } from './dtos/update-stock.dto.js';
 import { uploadFields } from '../utils/s3.util.js';
 import { requireAccessToken } from '../middlewares/require-acces-token.middleware.js';
+import { requireAdminRole } from '../middlewares/require-admin-role.middleware.js';
 
 const goodsRouter = express.Router();
 const goodsController = new GoodsController();
@@ -13,6 +14,7 @@ const goodsController = new GoodsController();
 goodsRouter.post(
   '/',
   requireAccessToken,
+  requireAdminRole,
   uploadFields,
   createGoodsDTO,
   goodsController.createGoods
@@ -28,6 +30,7 @@ goodsRouter.get('/:goodsId', goodsController.getGoodsDetail);
 goodsRouter.patch(
   '/:goodsId',
   requireAccessToken,
+  requireAdminRole,
   updateGoodsDTO,
   goodsController.updateGoods
 );
@@ -36,6 +39,7 @@ goodsRouter.patch(
 goodsRouter.patch(
   '/:goodsId/goodsOptions/:goodsOptionId',
   requireAccessToken,
+  requireAdminRole,
   updateStockDTO,
   goodsController.updateStock
 );
@@ -44,6 +48,7 @@ goodsRouter.patch(
 goodsRouter.delete(
   '/:goodsId',
   requireAccessToken,
+  requireAdminRole,
   goodsController.goodsDelete
 );
 

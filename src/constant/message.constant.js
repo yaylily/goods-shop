@@ -41,6 +41,9 @@ export const MESSAGES = {
       SIGN_IN: {
         SUCCEED: '로그인에 성공했습니다.',
       },
+      PERMISSION: {
+        ADMIN_ONLY: 'ADMIN 계정만 접근 가능합니다.',
+      },
     },
     READ_ME: {
       SUCCEED: '내정보 조회에 성공했습니다.',
