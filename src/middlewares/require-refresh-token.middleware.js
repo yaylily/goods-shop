@@ -47,6 +47,7 @@ export const requireRefreshToken = async (req, res, next) => {
     }
 
     const { userId } = payload;
+
     // DB에서 RefreshToken을 조회
     const existedRefreshToken = await prisma.refreshToken.findUnique({
       where: { userId },
@@ -55,7 +56,7 @@ export const requireRefreshToken = async (req, res, next) => {
     //넘겨 받은 RefreshToken과 비교
     const isValidRefreshToken =
       existedRefreshToken?.refreshToken &&
-      bcrypt.compareSync(refreshToken, existedRefreshToken);
+      bcrypt.compareSync(refreshToken, existedRefreshToken.refreshToken);
 
     //payload에 담긴 userId와 일치하는 사용자가 없는 경우
     if (!isValidRefreshToken) {

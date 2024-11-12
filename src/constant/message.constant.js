@@ -43,6 +43,9 @@ export const MESSAGES = {
       SIGN_IN: {
         SUCCEED: '로그인에 성공했습니다.',
       },
+      TOKEN_REFRESH: {
+        SUCCEED: '토큰 재발급에 성공했습니다.',
+      },
     },
     READ_ME: {
       SUCCEED: '내정보 조회에 성공했습니다.',

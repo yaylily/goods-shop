@@ -56,29 +56,46 @@ export class AuthService {
       throw new HttpError.Unauthorized(MESSAGES.USERS.AUTH.COMMON.UNAUTORIZED);
     }
 
-    // 페이로드
-    const payload = { userId: user.userId };
+    return this.generateAuthTokens({ userId: user.userId });
+  };
 
+  // 토큰 재발급
+  refreshToken = async (userId) => {
+    return this.generateAuthTokens({ userId });
+  };
+
+  // 토큰 생성 함수
+  generateAuthTokens = async (payload) => {
     // accessToken, refreshToken 생성
-    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
-      expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-    });
-
-    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, {
-      expiresIn: REFRESH_TOKEN_EXPIRES_IN,
-    });
+    const accessToken = this.createToken(
+      payload,
+      ACCESS_TOKEN_SECRET,
+      ACCESS_TOKEN_EXPIRES_IN
+    );
+    const refreshToken = this.createToken(
+      payload,
+      REFRESH_TOKEN_SECRET,
+      REFRESH_TOKEN_EXPIRES_IN
+    );
 
     // refreshToken 저장
     const hashedRefreshToken = bcrypt.hashSync(refreshToken, HASH_SALT_ROUNDS);
 
-    await this.authRepository.saveRefreshToken(user.userId, hashedRefreshToken);
+    await this.authRepository.saveRefreshToken(
+      payload.userId,
+      hashedRefreshToken
+    );
 
-    // 반환
     return {
+      userId: payload.userId,
       accessToken,
       refreshToken,
-      userId: user.userId,
       expiresIn: ACCESS_TOKEN_EXPIRES_IN,
     };
+  };
+
+  //JWT 토큰 생성
+  createToken = (payload, secret, expiresIn) => {
+    return jwt.sign(payload, secret, { expiresIn });
   };
 }
