@@ -6,8 +6,12 @@ import jwt from 'jsonwebtoken';
 import {
   HASH_SALT_ROUNDS,
   ACCESS_TOKEN_EXPIRES_IN,
+  REFRESH_TOKEN_EXPIRES_IN,
 } from '../../constant/auth.constant.js';
-import { ACCESS_TOKEN_SECRET } from '../../constant/env.constant.js';
+import {
+  ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET,
+} from '../../constant/env.constant.js';
 
 export class AuthService {
   authRepository = new AuthRepository();
@@ -28,7 +32,7 @@ export class AuthService {
       hashedPassword,
       name,
       phoneNumber,
-      address,
+      address
     );
 
     return user;
@@ -52,17 +56,46 @@ export class AuthService {
       throw new HttpError.Unauthorized(MESSAGES.USERS.AUTH.COMMON.UNAUTORIZED);
     }
 
-    // 페이로드
-    const payload = { userId: user.userId };
-    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
-      expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-    });
+    return this.generateAuthTokens({ userId: user.userId });
+  };
 
-    // 반환
+  // 토큰 재발급
+  refreshToken = async (userId) => {
+    return this.generateAuthTokens({ userId });
+  };
+
+  // 토큰 생성 함수
+  generateAuthTokens = async (payload) => {
+    // accessToken, refreshToken 생성
+    const accessToken = this.createToken(
+      payload,
+      ACCESS_TOKEN_SECRET,
+      ACCESS_TOKEN_EXPIRES_IN
+    );
+    const refreshToken = this.createToken(
+      payload,
+      REFRESH_TOKEN_SECRET,
+      REFRESH_TOKEN_EXPIRES_IN
+    );
+
+    // refreshToken 저장
+    const hashedRefreshToken = bcrypt.hashSync(refreshToken, HASH_SALT_ROUNDS);
+
+    await this.authRepository.saveRefreshToken(
+      payload.userId,
+      hashedRefreshToken
+    );
+
     return {
+      userId: payload.userId,
       accessToken,
-      userId: user.userId,
+      refreshToken,
       expiresIn: ACCESS_TOKEN_EXPIRES_IN,
     };
+  };
+
+  //JWT 토큰 생성
+  createToken = (payload, secret, expiresIn) => {
+    return jwt.sign(payload, secret, { expiresIn });
   };
 }

@@ -2,7 +2,7 @@ import { HTTP_STATUS } from '../../constant/http-status.constant.js';
 import { MESSAGES } from '../../constant/message.constant.js';
 import { AuthService } from '../services/auth.service.js';
 import { UserResponseDto } from '../dtos/user.response.dto.js';
-import { SignInResponseDTO } from '../dtos/sign-in.response.dto.js';
+import { TokensResponseDTO } from '../dtos/tokens.response.dto.js';
 
 export class AuthController {
   authService = new AuthService();
@@ -18,7 +18,7 @@ export class AuthController {
         password,
         name,
         phoneNumber,
-        address,
+        address
       );
 
       const userResponseDto = new UserResponseDto(user);
@@ -41,12 +41,31 @@ export class AuthController {
       // 로그인 후 토근 발급
       const userData = await this.authService.signIn(email, password);
 
-      const sginInResponseDTO = new SignInResponseDTO(userData);
+      const tokensResponseDTO = new TokensResponseDTO(userData);
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: MESSAGES.USERS.AUTH.SIGN_IN.SUCCEED,
-        data: sginInResponseDTO,
+        data: tokensResponseDTO,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // 토큰 재발급
+  refreshToken = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      const refreshedTokens = await this.authService.refreshToken(userId);
+
+      const tokensResponseDTO = new TokensResponseDTO(refreshedTokens);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.USERS.AUTH.TOKEN_REFRESH.SUCCEED,
+        data: tokensResponseDTO,
       });
     } catch (err) {
       next(err);

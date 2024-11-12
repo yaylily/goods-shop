@@ -27,12 +27,14 @@ export const MESSAGES = {
           REQUIRED: '주소를 입력해 주세요.',
         },
         UNAUTORIZED: '인증 정보가 유효하지 않습니다.',
+        FORBIDDEN: '접근 권한이 없습니다.',
         JWT: {
           NO_TOKEN: '인증 정보가 없습니다.',
           NOT_SUPPORTED_TYPE: '지원하지 않는 인증 방식입니다.',
           EXPIRED: '인증 정보가 만료되었습니다.',
           NO_USER: '인증 정보와 일치하는 유저가 없습니다.',
           INVALID: '인증 정보가 유효하지 않습니다.',
+          DISCARDED_TOKEN: '폐기 된 인증 정보입니다.',
         },
       },
       SIGN_UP: {
@@ -41,8 +43,8 @@ export const MESSAGES = {
       SIGN_IN: {
         SUCCEED: '로그인에 성공했습니다.',
       },
-      PERMISSION: {
-        ADMIN_ONLY: 'ADMIN 계정만 접근 가능합니다.',
+      TOKEN_REFRESH: {
+        SUCCEED: '토큰 재발급에 성공했습니다.',
       },
     },
     READ_ME: {

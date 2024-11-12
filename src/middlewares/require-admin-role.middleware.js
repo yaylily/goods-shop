@@ -6,9 +6,7 @@ export const requireAdminRole = (req, res, next) => {
   try {
     const { role } = req.user;
     if (role !== USER_ROLE.ADMIN) {
-      throw new HttpError.Unauthorized(
-        MESSAGES.USERS.AUTH.PERMISSION.ADMIN_ONLY
-      );
+      throw new HttpError.Forbidden(MESSAGES.USERS.AUTH.COMMON.FORBIDDEN);
     }
 
     next();

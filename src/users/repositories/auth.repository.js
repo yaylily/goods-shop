@@ -28,4 +28,16 @@ export class AuthRepository {
 
     return user;
   };
+
+  // refreshToken 저장
+  saveRefreshToken = async (userId, hashedRefreshToken) => {
+    return await prisma.refreshToken.upsert({
+      where: { userId },
+      update: { refreshToken: hashedRefreshToken },
+      create: {
+        userId,
+        refreshToken: hashedRefreshToken,
+      },
+    });
+  };
 }
