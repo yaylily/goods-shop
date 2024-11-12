@@ -4,7 +4,7 @@ import { createGoodsDTO } from './dtos/create-goods.dto.js';
 import { updateGoodsDTO } from './dtos/update-goods.dto.js';
 import { updateStockDTO } from './dtos/update-stock.dto.js';
 import { uploadFields } from '../utils/s3.util.js';
-import { requireAccessToken } from '../middlewares/require-acces-token.middleware.js';
+import { requireAccessToken } from '../middlewares/require-access-token.middleware.js';
 import { requireAdminRole } from '../middlewares/require-admin-role.middleware.js';
 
 const goodsRouter = express.Router();

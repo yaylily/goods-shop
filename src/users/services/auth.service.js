@@ -6,8 +6,12 @@ import jwt from 'jsonwebtoken';
 import {
   HASH_SALT_ROUNDS,
   ACCESS_TOKEN_EXPIRES_IN,
+  REFRESH_TOKEN_EXPIRES_IN,
 } from '../../constant/auth.constant.js';
-import { ACCESS_TOKEN_SECRET } from '../../constant/env.constant.js';
+import {
+  ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET,
+} from '../../constant/env.constant.js';
 
 export class AuthService {
   authRepository = new AuthRepository();
@@ -28,7 +32,7 @@ export class AuthService {
       hashedPassword,
       name,
       phoneNumber,
-      address,
+      address
     );
 
     return user;
@@ -54,13 +58,25 @@ export class AuthService {
 
     // 페이로드
     const payload = { userId: user.userId };
+
+    // accessToken, refreshToken 생성
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
       expiresIn: ACCESS_TOKEN_EXPIRES_IN,
     });
 
+    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, {
+      expiresIn: REFRESH_TOKEN_EXPIRES_IN,
+    });
+
+    // refreshToken 저장
+    const hashedRefreshToken = bcrypt.hashSync(refreshToken, HASH_SALT_ROUNDS);
+
+    await this.authRepository.saveRefreshToken(user.userId, hashedRefreshToken);
+
     // 반환
     return {
       accessToken,
+      refreshToken,
       userId: user.userId,
       expiresIn: ACCESS_TOKEN_EXPIRES_IN,
     };

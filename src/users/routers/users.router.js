@@ -1,5 +1,5 @@
 import express from 'express';
-import { requireAccessToken } from '../../middlewares/require-acces-token.middleware.js';
+import { requireAccessToken } from '../../middlewares/require-access-token.middleware.js';
 import { UsersController } from '../controllers/users.controller.js';
 
 const usersRouter = express.Router();

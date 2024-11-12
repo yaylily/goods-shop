@@ -1,6 +1,7 @@
 export class SignInResponseDTO {
-  constructor({ accessToken, userId, expiresIn }) {
+  constructor({ accessToken, refreshToken, userId, expiresIn }) {
     this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
     this.userId = userId;
     this.expiresIn = expiresIn;
   }
