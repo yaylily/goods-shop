@@ -12,6 +12,7 @@ import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
 } from '../../constant/env.constant.js';
+import { prisma } from '../../utils/prisma.util.js';
 
 export class AuthService {
   authRepository = new AuthRepository();
@@ -97,5 +98,10 @@ export class AuthService {
   //JWT 토큰 생성
   createToken = (payload, secret, expiresIn) => {
     return jwt.sign(payload, secret, { expiresIn });
+  };
+
+  // 로그아웃
+  signOut = async (userId) => {
+    return await this.authRepository.signOut(userId);
   };
 }

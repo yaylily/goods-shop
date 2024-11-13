@@ -13,9 +13,10 @@ authRouter.post('/sign-up', signUpDTO, authController.signUp);
 // 로그인
 authRouter.post('/sign-in', signInDTO, authController.signIn);
 
-// 로그아웃
-
 // 토큰 재발급
 authRouter.post('/tokens', requireRefreshToken, authController.refreshToken);
+
+// 로그아웃
+authRouter.post('/sign-out', requireRefreshToken, authController.signOut);
 
 export { authRouter };
