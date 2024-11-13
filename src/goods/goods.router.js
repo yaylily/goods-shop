@@ -4,7 +4,7 @@ import { createGoodsDTO } from './dtos/create-goods.dto.js';
 import { updateGoodsDTO } from './dtos/update-goods.dto.js';
 import { updateStockDTO } from './dtos/update-stock.dto.js';
 import { uploadFields } from '../utils/s3.util.js';
-import { requireAccessToken } from '../middlewares/require-access-token.middleware.js';
+import { requireToken } from '../middlewares/require-token.middleware.js';
 import { requireAdminRole } from '../middlewares/require-admin-role.middleware.js';
 
 const goodsRouter = express.Router();
@@ -13,7 +13,7 @@ const goodsController = new GoodsController();
 // 굿즈 생성
 goodsRouter.post(
   '/',
-  requireAccessToken,
+  requireToken('access'),
   requireAdminRole,
   uploadFields,
   createGoodsDTO,
@@ -29,7 +29,7 @@ goodsRouter.get('/:goodsId', goodsController.getGoodsDetail);
 // 굿즈 수정
 goodsRouter.patch(
   '/:goodsId',
-  requireAccessToken,
+  requireToken('access'),
   requireAdminRole,
   updateGoodsDTO,
   goodsController.updateGoods
@@ -38,7 +38,7 @@ goodsRouter.patch(
 // 재고 수정
 goodsRouter.patch(
   '/:goodsId/goodsOptions/:goodsOptionId',
-  requireAccessToken,
+  requireToken('access'),
   requireAdminRole,
   updateStockDTO,
   goodsController.updateStock
@@ -47,7 +47,7 @@ goodsRouter.patch(
 //굿즈 삭제
 goodsRouter.delete(
   '/:goodsId',
-  requireAccessToken,
+  requireToken('access'),
   requireAdminRole,
   goodsController.goodsDelete
 );

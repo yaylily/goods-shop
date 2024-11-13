@@ -2,7 +2,7 @@ import express from 'express';
 import { AuthController } from '../controllers/auth.controller.js';
 import { signUpDTO } from '../dtos/sign-up.dto.js';
 import { signInDTO } from '../dtos/sign-in.dto.js';
-import { requireRefreshToken } from '../../middlewares/require-refresh-token.middleware.js';
+import { requireToken } from '../../middlewares/require-token.middleware.js';
 
 const authRouter = express.Router();
 const authController = new AuthController();
@@ -14,9 +14,13 @@ authRouter.post('/sign-up', signUpDTO, authController.signUp);
 authRouter.post('/sign-in', signInDTO, authController.signIn);
 
 // 토큰 재발급
-authRouter.post('/tokens', requireRefreshToken, authController.refreshToken);
+authRouter.post(
+  '/tokens',
+  requireToken('refresh'),
+  authController.refreshToken
+);
 
 // 로그아웃
-authRouter.post('/sign-out', requireRefreshToken, authController.signOut);
+authRouter.post('/sign-out', requireToken('refresh'), authController.signOut);
 
 export { authRouter };
