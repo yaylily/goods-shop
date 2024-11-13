@@ -40,4 +40,12 @@ export class AuthRepository {
       },
     });
   };
+
+  // 로그아웃
+  signOut = async (userId) => {
+    await prisma.refreshToken.update({
+      where: { userId },
+      data: { refreshToken: null },
+    });
+  };
 }

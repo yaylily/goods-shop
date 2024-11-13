@@ -71,4 +71,20 @@ export class AuthController {
       next(err);
     }
   };
+
+  // 로그아웃
+  signOut = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      await this.authService.signOut(userId);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.USERS.AUTH.SIGN_OUT.SUCCED,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
