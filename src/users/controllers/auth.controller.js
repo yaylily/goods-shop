@@ -2,7 +2,7 @@ import { HTTP_STATUS } from '../../constant/http-status.constant.js';
 import { MESSAGES } from '../../constant/message.constant.js';
 import { AuthService } from '../services/auth.service.js';
 import { UserResponseDto } from '../dtos/user.response.dto.js';
-import { TokensResponseDTO } from '../dtos/tokens.response.dto.js';
+import { TokensResponseDTO } from '../dtos/tokens.response.dto.js';
 
 export class AuthController {
   authService = new AuthService();

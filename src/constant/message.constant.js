@@ -12,6 +12,7 @@ export const MESSAGES = {
           REQUIRED: '비밀번호를 입력해 주세요.',
           MIN_LENGTH: `비밀번호는 6자리 이상이어야 합니다.`,
           INVALID: '비밀번호가 올바르지 않습니다.',
+          SAME_AS_OLD: '이전 비밀번호와 동일합니다.',
         },
         PASSWORD_CONFIRM: {
           REQUIRED: '비밀번호 확인을 입력해 주세요.',
@@ -52,6 +53,9 @@ export const MESSAGES = {
     },
     READ_ME: {
       SUCCEED: '내정보 조회에 성공했습니다.',
+    },
+    UPDATE_ME: {
+      SUCCEED: '내정보 수정에 성공했습니다.',
     },
   },
   GOODS: {
