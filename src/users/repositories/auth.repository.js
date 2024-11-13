@@ -10,22 +10,33 @@ export class AuthRepository {
     });
   };
 
-  // 회원가입
+  // 회원가입 + 장바구니 생성
   signUp = async (email, hashedPassword, name, phoneNumber, address) => {
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name,
-        phoneNumber,
-        address,
-        points: 500000,
-      },
+    const user = await prisma.$transaction(async (prisma) => {
+      // 유저생성
+      const user = await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          name,
+          phoneNumber,
+          address,
+          points: 500000,
+        },
+      });
+
+      // 장바구니 생성
+      await prisma.cart.create({
+        data: {
+          userId: user.userId,
+        },
+      });
+
+      // 반환 값 비밀번호 제거
+      user.password = undefined;
+
+      return user;
     });
-
-    // 반환 값 비밀번호 제거
-    user.password = undefined;
-
     return user;
   };
 
