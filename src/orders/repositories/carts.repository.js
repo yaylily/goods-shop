@@ -35,4 +35,18 @@ export class CartsRepository {
       },
     });
   };
+
+  // cartItem 존재 여부 확인
+  findCartItemById = async (cartItemId) => {
+    return prisma.cartItem.findUnique({
+      where: { cartItemId: +cartItemId },
+    });
+  };
+  // 장바구니 상품 수량 수정
+  updateQuantity = async (cartItemId, quantity) => {
+    return prisma.cartItem.update({
+      where: { cartItemId: +cartItemId },
+      data: { quantity },
+    });
+  };
 }

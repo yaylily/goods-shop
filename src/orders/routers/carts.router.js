@@ -17,4 +17,11 @@ cartsRouter.post(
 // 장바구니 상품 조회
 cartsRouter.get('/', requireToken('access'), cartsController.getCartItems);
 
+// 장바구니 수량 수정
+cartsRouter.put(
+  '/:cartItemId',
+  requireToken('access'),
+  cartsController.updateQuantity
+);
+
 export { cartsRouter };

@@ -63,4 +63,17 @@ export class CartsService {
 
     return { cartItems: itemsWithPrice, totalPrice };
   };
+
+  // 장바구니 수량 수정
+  updateQuantity = async (cartItemId, quantity) => {
+    // 장바구니에 해당 상품이 존재하는지 확인
+    const existedCartItem =
+      await this.cartsRepository.findCartItemById(cartItemId);
+
+    if (!existedCartItem) {
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
+    }
+
+    return await this.cartsRepository.updateQuantity(cartItemId, quantity);
+  };
 }
