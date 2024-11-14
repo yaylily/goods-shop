@@ -137,4 +137,19 @@ export const MESSAGES = {
       FAIL: 'S3에서 이미지를 삭제하는데 실패했습니다.',
     },
   },
+  CARTS: {
+    COMMON: {
+      NOT_FOUND: '카트를 찾을 수 없습니다.',
+      ITEM_ALREADY_EXISTS: '이미 추가된 상품입니다.',
+    },
+    ADD_TO_CART: {
+      SUCCED: '장바구니에 상품이 추가되었습니다.',
+      QUANTITY: {
+        REQUIRED: '추가할 상품 수량을 입력해주세요.',
+      },
+    },
+    GET_CART: {
+      SUCCED: '장바구니 조회에 성공했습니다.',
+    },
+  },
 };
