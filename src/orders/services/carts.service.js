@@ -33,4 +33,34 @@ export class CartsService {
 
     return addedCart;
   };
+
+  // 장바구니 조회
+  getCartItems = async (userId) => {
+    // 존재하는 장바구니인지 확인
+    const existedCart = await this.cartsRepository.findCartById(userId);
+
+    if (!existedCart) {
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
+    }
+
+    const cartItems = await this.cartsRepository.getCartItems(
+      existedCart.cartId
+    );
+
+    let totalPrice = 0;
+
+    const itemsWithPrice = cartItems.map((item) => {
+      const itemPrice =
+        item.quantity *
+        (item.goodsOption.addPrice + item.goodsOption.goods.price);
+      totalPrice += itemPrice;
+
+      return {
+        ...item,
+        itemPrice,
+      };
+    });
+
+    return { cartItems: itemsWithPrice, totalPrice };
+  };
 }

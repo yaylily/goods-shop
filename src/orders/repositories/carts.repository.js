@@ -21,4 +21,18 @@ export class CartsRepository {
       data: { cartId, goodsOptionId: +goodsOptionId, quantity },
     });
   };
+
+  // 장바구니 상품 조회
+  getCartItems = async (cartId) => {
+    return prisma.cartItem.findMany({
+      where: { cartId },
+      include: {
+        goodsOption: {
+          include: {
+            goods: true,
+          },
+        },
+      },
+    });
+  };
 }

@@ -148,5 +148,8 @@ export const MESSAGES = {
         REQUIRED: '추가할 상품 수량을 입력해주세요.',
       },
     },
+    GET_CART: {
+      SUCCED: '장바구니 조회에 성공했습니다.',
+    },
   },
 };

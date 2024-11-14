@@ -14,4 +14,7 @@ cartsRouter.post(
   cartsController.addToCart
 );
 
+// 장바구니 상품 조회
+cartsRouter.get('/', requireToken('access'), cartsController.getCartItems);
+
 export { cartsRouter };
