@@ -151,5 +151,8 @@ export const MESSAGES = {
     GET_CART: {
       SUCCED: '장바구니 조회에 성공했습니다.',
     },
+    UPDATE_QUANTITY: {
+      SUCCED: '수량 수정에 성공했습니다.',
+    },
   },
 };
