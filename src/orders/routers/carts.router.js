@@ -1,7 +1,8 @@
 import express from 'express';
 import { CartsController } from '../controllers/carts.controller.js';
 import { requireToken } from '../../middlewares/require-token.middleware.js';
-import { createCartItemDTO } from '../dtos/create-cart-item.dto.js';
+import { CreateCartItemDTO } from '../dtos/create-cart-item.dto.js';
+import { UpdateCartItemStockDTO } from '../dtos/update-cart-item-stock.dto.js';
 
 const cartsRouter = express.Router();
 const cartsController = new CartsController();
@@ -10,7 +11,7 @@ const cartsController = new CartsController();
 cartsRouter.post(
   '/goods/:goodsId/goodsOptions/:goodsOptionId',
   requireToken('access'),
-  createCartItemDTO,
+  CreateCartItemDTO,
   cartsController.addToCart
 );
 
@@ -21,7 +22,15 @@ cartsRouter.get('/', requireToken('access'), cartsController.getCartItems);
 cartsRouter.put(
   '/:cartItemId',
   requireToken('access'),
+  UpdateCartItemStockDTO,
   cartsController.updateQuantity
+);
+
+// 장바구니 상품 삭제
+cartsRouter.delete(
+  '/:cartItemId',
+  requireToken('access'),
+  cartsController.deleteCartItem
 );
 
 export { cartsRouter };

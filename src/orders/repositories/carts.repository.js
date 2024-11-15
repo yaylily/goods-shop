@@ -49,4 +49,11 @@ export class CartsRepository {
       data: { quantity },
     });
   };
+
+  // 장바구니 상품 삭제
+  deleteCartItem = async (cartItemId) => {
+    await prisma.cartItem.delete({
+      where: { cartItemId: +cartItemId },
+    });
+  };
 }

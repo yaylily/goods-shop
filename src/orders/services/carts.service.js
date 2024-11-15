@@ -65,7 +65,14 @@ export class CartsService {
   };
 
   // 장바구니 수량 수정
-  updateQuantity = async (cartItemId, quantity) => {
+  updateQuantity = async (userId, cartItemId, quantity) => {
+    // 존재하는 장바구니인지 확인
+    const existedCart = await this.cartsRepository.findCartById(userId);
+
+    if (!existedCart) {
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
+    }
+
     // 장바구니에 해당 상품이 존재하는지 확인
     const existedCartItem =
       await this.cartsRepository.findCartItemById(cartItemId);
@@ -75,5 +82,24 @@ export class CartsService {
     }
 
     return await this.cartsRepository.updateQuantity(cartItemId, quantity);
+  };
+
+  // 장바구니 상품 삭제
+  deleteCartItem = async (userId, cartItemId) => {
+    const existedCart = await this.cartsRepository.findCartById(userId);
+
+    if (!existedCart) {
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
+    }
+
+    // 장바구니에 해당 상품이 존재하는지 확인
+    const existedCartItem =
+      await this.cartsRepository.findCartItemById(cartItemId);
+
+    if (!existedCartItem) {
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
+    }
+
+    await this.cartsRepository.deleteCartItem(cartItemId);
   };
 }
