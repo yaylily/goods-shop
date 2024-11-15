@@ -153,6 +153,10 @@ export const MESSAGES = {
     },
     UPDATE_QUANTITY: {
       SUCCED: '수량 수정에 성공했습니다.',
+      REQUIRED: '수정 할 수량을 입력해주세요.',
+    },
+    DELETE_CART_ITEM: {
+      SUCCED: '상품 삭제에 성공했습니다.',
     },
   },
 };

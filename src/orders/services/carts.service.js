@@ -5,14 +5,31 @@ import { CartsRepository } from '../repositories/carts.repository.js';
 export class CartsService {
   cartsRepository = new CartsRepository();
 
+  // 장바구니가 존재하는지 확인
+  async verifyCartExist(userId) {
+    const cart = await this.cartsRepository.findCartById(userId);
+
+    if (!cart) {
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
+    }
+
+    return cart;
+  }
+
+  // 장바구니 아이템이 존재하는지 확인
+  async verifyCartItemExist(cartItemId) {
+    const cartItem = await this.cartsRepository.findCartItemById(cartItemId);
+
+    if (!cartItem) {
+      throw new HttpError.Conflict(MESSAGES.CARTS.COMMON.ITEM_ALREADY_EXISTS);
+    }
+    return cartItem;
+  }
+
   // 장바구니 상품 추가
   addToCart = async (userId, goodsOptionId, quantity) => {
     // 존재하는 장바구니인지 확인
-    const existedCart = await this.cartsRepository.findCartById(userId);
-
-    if (!existedCart) {
-      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
-    }
+    const existedCart = await this.verifyCartExist(userId);
 
     // 이미 등록된 상품인지 확인
     const ExistedItem = await this.cartsRepository.findOptionById(
@@ -37,15 +54,9 @@ export class CartsService {
   // 장바구니 조회
   getCartItems = async (userId) => {
     // 존재하는 장바구니인지 확인
-    const existedCart = await this.cartsRepository.findCartById(userId);
+    const cart = await this.verifyCartExist(userId);
 
-    if (!existedCart) {
-      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
-    }
-
-    const cartItems = await this.cartsRepository.getCartItems(
-      existedCart.cartId
-    );
+    const cartItems = await this.cartsRepository.getCartItems(cart.cartId);
 
     let totalPrice = 0;
 
@@ -65,15 +76,24 @@ export class CartsService {
   };
 
   // 장바구니 수량 수정
-  updateQuantity = async (cartItemId, quantity) => {
-    // 장바구니에 해당 상품이 존재하는지 확인
-    const existedCartItem =
-      await this.cartsRepository.findCartItemById(cartItemId);
+  updateQuantity = async (userId, cartItemId, quantity) => {
+    // 존재하는 장바구니인지 확인
+    await this.verifyCartExist(userId);
 
-    if (!existedCartItem) {
-      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
-    }
+    // 장바구니에 해당 상품이 존재하는지 확인
+    await this.verifyCartItemExist(cartItemId);
 
     return await this.cartsRepository.updateQuantity(cartItemId, quantity);
+  };
+
+  // 장바구니 상품 삭제
+  deleteCartItem = async (userId, cartItemId) => {
+    // 존재하는 장바구니인지 확인
+    await this.verifyCartExist(userId);
+
+    // 장바구니에 해당 상품이 존재하는지 확인
+    await this.verifyCartItemExist(cartItemId);
+
+    await this.cartsRepository.deleteCartItem(cartItemId);
   };
 }

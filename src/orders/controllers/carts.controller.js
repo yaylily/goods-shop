@@ -54,10 +54,12 @@ export class CartsController {
   // 장바구니 상품 수량 수정
   updateQuantity = async (req, res, next) => {
     try {
+      const { userId } = req.user;
       const { cartItemId } = req.params;
       const { quantity } = req.body;
 
       const updatedCartItem = await this.cartsService.updateQuantity(
+        userId,
         cartItemId,
         quantity
       );
@@ -68,6 +70,23 @@ export class CartsController {
         status: HTTP_STATUS.OK,
         message: MESSAGES.CARTS.UPDATE_QUANTITY.SUCCED,
         data: cartItemResponseDTO,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // 장바구니 상품 삭제
+  deleteCartItem = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      const { cartItemId } = req.params;
+
+      await this.cartsService.deleteCartItem(userId, cartItemId);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.CARTS.DELETE_CART_ITEM.SUCCED,
       });
     } catch (err) {
       next(err);
