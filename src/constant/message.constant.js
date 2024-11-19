@@ -159,4 +159,16 @@ export const MESSAGES = {
       SUCCED: '상품 삭제에 성공했습니다.',
     },
   },
+  PAYMENT: {
+    COMMON: {
+      INSUFFICIENT_POINTS: '보유한 포인트가 부족합니다.',
+      INSUFFICIENT_STOCK: (goodsName) =>
+        `상품 ${goodsName}의 재고가 부족합니다.`,
+    },
+    PURCHASE_CART_ITEMS: {
+      SUCCED: '장바구니 상품 구매에 성공했습니다.',
+      NOT_FOUND_CART: '장바구니를 찾을 수 없습니다.',
+      EMPTY_CART: '장바구니가 비어있습니다.',
+    },
+  },
 };
