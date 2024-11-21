@@ -10,7 +10,7 @@ export class CartsService {
     const cart = await this.cartsRepository.findCartById(userId);
 
     if (!cart) {
-      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND);
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND_CART);
     }
 
     return cart;
@@ -21,7 +21,7 @@ export class CartsService {
     const cartItem = await this.cartsRepository.findCartItemById(cartItemId);
 
     if (!cartItem) {
-      throw new HttpError.Conflict(MESSAGES.CARTS.COMMON.ITEM_ALREADY_EXISTS);
+      throw new HttpError.NotFound(MESSAGES.CARTS.COMMON.NOT_FOUND_ITEM);
     }
     return cartItem;
   }
@@ -75,24 +75,24 @@ export class CartsService {
     return { cartItems: itemsWithPrice, totalPrice };
   };
 
+  // 특정 사용자에 대한 장바구니와 아이템 검증
+  async verifyCartAndItem(userId, cartItemId) {
+    await this.verifyCartExist(userId);
+    await this.verifyCartItemExist(cartItemId);
+  }
+
   // 장바구니 수량 수정
   updateQuantity = async (userId, cartItemId, quantity) => {
-    // 존재하는 장바구니인지 확인
-    await this.verifyCartExist(userId);
-
-    // 장바구니에 해당 상품이 존재하는지 확인
-    await this.verifyCartItemExist(cartItemId);
+    // 장바구니, 상품 확인
+    await this.verifyCartAndItem(userId, cartItemId);
 
     return await this.cartsRepository.updateQuantity(cartItemId, quantity);
   };
 
   // 장바구니 상품 삭제
   deleteCartItem = async (userId, cartItemId) => {
-    // 존재하는 장바구니인지 확인
-    await this.verifyCartExist(userId);
-
-    // 장바구니에 해당 상품이 존재하는지 확인
-    await this.verifyCartItemExist(cartItemId);
+    // 장바구니, 상품 확인
+    await this.verifyCartAndItem(userId, cartItemId);
 
     await this.cartsRepository.deleteCartItem(cartItemId);
   };
