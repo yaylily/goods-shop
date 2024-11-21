@@ -7,7 +7,7 @@ const schema = Joi.object({
   }),
 });
 
-export const CreateCartItemDTO = async (req, res, next) => {
+export const AddItemDTO = async (req, res, next) => {
   try {
     await schema.validateAsync(req.body);
     next();

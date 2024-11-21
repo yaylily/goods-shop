@@ -1,6 +1,7 @@
 import express from 'express';
 import { requireToken } from '../../middlewares/require-token.middleware.js';
 import { PaymentController } from '../controllers/payment.controller.js';
+import { AddItemDTO } from '../dtos/add-item.dto.js';
 
 const paymentRouter = express.Router();
 const paymentController = new PaymentController();
@@ -10,6 +11,14 @@ paymentRouter.post(
   '/carts/checkout',
   requireToken('access'),
   paymentController.purchaseCartItems
+);
+
+// 굿즈 바로 구매
+paymentRouter.post(
+  '/goods/:goodsId/goodsOptions/:goodsOptionId',
+  requireToken('access'),
+  AddItemDTO,
+  paymentController.buyNow
 );
 
 export { paymentRouter };

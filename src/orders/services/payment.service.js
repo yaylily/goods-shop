@@ -57,7 +57,39 @@ export class PaymentService {
       cart.cartId,
       cartItems
     );
-    console.log(paidItems);
+
     return paidItems;
+  };
+
+  // 바로구매
+  buyNow = async (userId, points, goodsOptionId, quantity) => {
+    // 상품 정보 불러오기
+    const item = await this.paymentRepository.findItemById(goodsOptionId);
+
+    // 포인트 확인
+    const totalPrice = (item.addPrice + item.goods.price) * quantity;
+
+    if (points < totalPrice) {
+      throw new HttpError.BadRequest(
+        MESSAGES.PAYMENT.COMMON.INSUFFICIENT_POINTS
+      );
+    }
+
+    // 재고 확인
+    if (item.stock < quantity) {
+      throw new HttpError.BadRequest(
+        MESSAGES.PAYMENT.COMMON.INSUFFICIENT_STOCK(item.goods.goodsName)
+      );
+    }
+
+    // 결제
+    const paidItem = await this.paymentRepository.buyNow(
+      userId,
+      totalPrice,
+      goodsOptionId,
+      quantity
+    );
+
+    return paidItem;
   };
 }

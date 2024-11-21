@@ -65,4 +65,48 @@ export class PaymentRepository {
       });
     });
   };
+
+  findItemById = async (goodsOptionId) => {
+    return await prisma.goodsOption.findUnique({
+      where: { goodsOptionId: +goodsOptionId },
+      include: { goods: true },
+    });
+  };
+
+  // 바로주문 트랜젝션
+  buyNow = async (userId, totalPrice, goodsOptionId, quantity) => {
+    return await prisma.$transaction(async (prisma) => {
+      // 포인트 차감
+      await prisma.user.update({
+        where: { userId },
+        data: { points: { decrement: totalPrice } },
+      });
+
+      // 재고 조정
+      await prisma.goodsOption.update({
+        where: { goodsOptionId: +goodsOptionId },
+        data: { stock: { decrement: quantity } },
+      });
+
+      // 주문 정보 생성
+      const order = await prisma.order.create({
+        data: { userId, totalPrice },
+      });
+
+      await prisma.orderItem.create({
+        data: {
+          orderId: order.orderId,
+          goodsOptionId: +goodsOptionId,
+          goodsPrice: totalPrice,
+          quantity,
+        },
+      });
+
+      // 반환 결제 데이터
+      return await prisma.order.findUnique({
+        where: { orderId: order.orderId },
+        include: { orderItems: true },
+      });
+    });
+  };
 }

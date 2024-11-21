@@ -171,5 +171,8 @@ export const MESSAGES = {
       NOT_FOUND_CART: '장바구니를 찾을 수 없습니다.',
       EMPTY_CART: '장바구니가 비어있습니다.',
     },
+    BUY_NOW: {
+      SUCCED: '상품 바로 구매에 성공했습니다.',
+    },
   },
 };
