@@ -1,7 +1,7 @@
 import express from 'express';
 import { CartsController } from '../controllers/carts.controller.js';
 import { requireToken } from '../../middlewares/require-token.middleware.js';
-import { CreateCartItemDTO } from '../dtos/create-cart-item.dto.js';
+import { AddItemDTO } from '../dtos/add-item.dto.js';
 import { UpdateCartItemStockDTO } from '../dtos/update-cart-item-stock.dto.js';
 
 const cartsRouter = express.Router();
@@ -11,7 +11,7 @@ const cartsController = new CartsController();
 cartsRouter.post(
   '/goods/:goodsId/goodsOptions/:goodsOptionId',
   requireToken('access'),
-  CreateCartItemDTO,
+  AddItemDTO,
   cartsController.addToCart
 );
 

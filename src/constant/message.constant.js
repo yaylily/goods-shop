@@ -139,8 +139,9 @@ export const MESSAGES = {
   },
   CARTS: {
     COMMON: {
-      NOT_FOUND: '카트를 찾을 수 없습니다.',
+      NOT_FOUND_CART: '카트를 찾을 수 없습니다.',
       ITEM_ALREADY_EXISTS: '이미 추가된 상품입니다.',
+      NOT_FOUND_ITEM: '장바구니에서 해당 상품을 찾을 수 없습니다.',
     },
     ADD_TO_CART: {
       SUCCED: '장바구니에 상품이 추가되었습니다.',
@@ -169,6 +170,9 @@ export const MESSAGES = {
       SUCCED: '장바구니 상품 구매에 성공했습니다.',
       NOT_FOUND_CART: '장바구니를 찾을 수 없습니다.',
       EMPTY_CART: '장바구니가 비어있습니다.',
+    },
+    BUY_NOW: {
+      SUCCED: '상품 바로 구매에 성공했습니다.',
     },
   },
 };
