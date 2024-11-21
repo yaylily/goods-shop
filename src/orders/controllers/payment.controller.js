@@ -8,19 +8,23 @@ export class PaymentController {
 
   // 장바구니 상품 구매
   purchaseCartItems = async (req, res, next) => {
-    const { userId, points } = req.user;
+    try {
+      const { userId, points } = req.user;
 
-    const purchasedCartItems = await this.paymentService.purchaseCartItems(
-      userId,
-      points
-    );
+      const purchasedCartItems = await this.paymentService.purchaseCartItems(
+        userId,
+        points
+      );
 
-    const orderResponseDto = new OrderResponseDto(purchasedCartItems);
+      const orderResponseDto = new OrderResponseDto(purchasedCartItems);
 
-    return res.status(HTTP_STATUS.CREATED).json({
-      status: HTTP_STATUS.CREATED,
-      message: MESSAGES.PAYMENT.PURCHASE_CART_ITEMS.SUCCED,
-      data: orderResponseDto,
-    });
+      return res.status(HTTP_STATUS.CREATED).json({
+        status: HTTP_STATUS.CREATED,
+        message: MESSAGES.PAYMENT.PURCHASE_CART_ITEMS.SUCCED,
+        data: orderResponseDto,
+      });
+    } catch (err) {
+      next(err);
+    }
   };
 }
