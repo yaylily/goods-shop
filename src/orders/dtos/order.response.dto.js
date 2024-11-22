@@ -3,6 +3,7 @@ export class OrderItemResponseDto {
     orderItemId,
     orderId,
     goodsOptionId,
+    goodsOptionName,
     goodsPrice,
     quantity,
     createdAt,
@@ -12,6 +13,7 @@ export class OrderItemResponseDto {
     this.orderItemId = orderItemId;
     this.orderId = orderId;
     this.goodsOptionId = goodsOptionId;
+    this.goodsOptionName = goodsOptionName;
     this.goodsPrice = goodsPrice;
     this.quantity = quantity;
     this.createdAt = createdAt;

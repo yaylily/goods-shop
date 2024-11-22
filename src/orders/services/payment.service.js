@@ -92,4 +92,9 @@ export class PaymentService {
 
     return paidItem;
   };
+
+  // 주문 목록 조회
+  getOrderList = async (userId) => {
+    return await this.paymentRepository.getOrderList(userId);
+  };
 }

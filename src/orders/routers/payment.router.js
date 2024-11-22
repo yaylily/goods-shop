@@ -21,4 +21,7 @@ paymentRouter.post(
   paymentController.buyNow
 );
 
+// 구매 목록 조회
+paymentRouter.get('/', requireToken('access'), paymentController.getOrderList);
+
 export { paymentRouter };
