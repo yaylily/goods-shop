@@ -88,13 +88,14 @@ model Order {
 }
 
 model OrderItem {
-  orderItemId   Int      @id @default(autoincrement()) @map("order_item_id")
-  orderId       Int      @map("order_id")
-  goodsOptionId Int      @map("goods_option_id")
-  goodsPrice    Int      @map("goods_price")
-  quantity      Int
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  orderItemId     Int      @id @default(autoincrement()) @map("order_item_id")
+  orderId         Int      @map("order_id")
+  goodsOptionId   Int      @map("goods_option_id")
+  goodsOptionName String   @map("goods_option_name")
+  goodsPrice      Int      @map("goods_price")
+  quantity        Int
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
   order        Order       @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
   goodsOptions GoodsOption @relation(fields: [goodsOptionId], references: [goodsOptionId], onDelete: Cascade)

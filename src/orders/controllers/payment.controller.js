@@ -20,7 +20,7 @@ export class PaymentController {
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
-        message: MESSAGES.PAYMENT.PURCHASE_CART_ITEMS.SUCCED,
+        message: MESSAGES.PAYMENT.PURCHASE_CART_ITEMS.SUCCEED,
         data: orderResponseDto,
       });
     } catch (err) {
@@ -46,8 +46,25 @@ export class PaymentController {
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
-        message: MESSAGES.PAYMENT.BUY_NOW.SUCCED,
+        message: MESSAGES.PAYMENT.BUY_NOW.SUCCEED,
         data: orderResponseDto,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // 주문 목록 조회
+  getOrderList = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      const OrderList = await this.paymentService.getOrderList(userId);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.PAYMENT.GET_ORDER_LIST.SUCCEED,
+        data: OrderList,
       });
     } catch (err) {
       next(err);

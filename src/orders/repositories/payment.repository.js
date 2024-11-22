@@ -50,6 +50,7 @@ export class PaymentRepository {
       const orderItems = cartItems.map((item) => ({
         orderId: order.orderId,
         goodsOptionId: item.goodsOptionId,
+        goodsOptionName: item.goodsOptionName,
         goodsPrice: item.goodsOption.addPrice + item.goodsOption.goods.price,
         quantity: item.quantity,
       }));
@@ -107,6 +108,13 @@ export class PaymentRepository {
         where: { orderId: order.orderId },
         include: { orderItems: true },
       });
+    });
+  };
+
+  // 회원별 주문 목록 조회
+  getOrderList = async (userId) => {
+    return await prisma.order.findMany({
+      where: { userId },
     });
   };
 }

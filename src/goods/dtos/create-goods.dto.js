@@ -41,6 +41,15 @@ const schema = Joi.object({
 
 export const createGoodsDTO = async (req, res, next) => {
   try {
+    // req.body.goodsOptions JSON 파싱
+    if (req.body.goodsOptions && typeof req.body.goodsOptions === 'string') {
+      try {
+        req.body.goodsOptions = JSON.parse(req.body.goodsOptions);
+      } catch (error) {
+        // JSON 파싱 실패 시 에러 반환
+        return next(new Error('Invalid JSON format in goodsOptions'));
+      }
+    }
     await schema.validateAsync(req.body);
     next();
   } catch (err) {

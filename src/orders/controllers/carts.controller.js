@@ -24,7 +24,7 @@ export class CartsController {
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
-        message: MESSAGES.CARTS.ADD_TO_CART.SUCCED,
+        message: MESSAGES.CARTS.ADD_TO_CART.SUCCEED,
         data: cartItemResponseDTO,
       });
     } catch (err) {
@@ -43,7 +43,7 @@ export class CartsController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: MESSAGES.CARTS.GET_CART.SUCCED,
+        message: MESSAGES.CARTS.GET_CART.SUCCEED,
         data: cartItemsListResponseDTO,
       });
     } catch (err) {
@@ -68,7 +68,7 @@ export class CartsController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: MESSAGES.CARTS.UPDATE_QUANTITY.SUCCED,
+        message: MESSAGES.CARTS.UPDATE_QUANTITY.SUCCEED,
         data: cartItemResponseDTO,
       });
     } catch (err) {
@@ -86,7 +86,7 @@ export class CartsController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: MESSAGES.CARTS.DELETE_CART_ITEM.SUCCED,
+        message: MESSAGES.CARTS.DELETE_CART_ITEM.SUCCEED,
       });
     } catch (err) {
       next(err);

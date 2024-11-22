@@ -144,20 +144,20 @@ export const MESSAGES = {
       NOT_FOUND_ITEM: '장바구니에서 해당 상품을 찾을 수 없습니다.',
     },
     ADD_TO_CART: {
-      SUCCED: '장바구니에 상품이 추가되었습니다.',
+      SUCCEED: '장바구니에 상품이 추가되었습니다.',
       QUANTITY: {
         REQUIRED: '추가할 상품 수량을 입력해주세요.',
       },
     },
     GET_CART: {
-      SUCCED: '장바구니 조회에 성공했습니다.',
+      SUCCEED: '장바구니 조회에 성공했습니다.',
     },
     UPDATE_QUANTITY: {
-      SUCCED: '수량 수정에 성공했습니다.',
+      SUCCEED: '수량 수정에 성공했습니다.',
       REQUIRED: '수정 할 수량을 입력해주세요.',
     },
     DELETE_CART_ITEM: {
-      SUCCED: '상품 삭제에 성공했습니다.',
+      SUCCEED: '상품 삭제에 성공했습니다.',
     },
   },
   PAYMENT: {
@@ -167,12 +167,15 @@ export const MESSAGES = {
         `상품 ${goodsName}의 재고가 부족합니다.`,
     },
     PURCHASE_CART_ITEMS: {
-      SUCCED: '장바구니 상품 구매에 성공했습니다.',
+      SUCCEED: '장바구니 상품 구매에 성공했습니다.',
       NOT_FOUND_CART: '장바구니를 찾을 수 없습니다.',
       EMPTY_CART: '장바구니가 비어있습니다.',
     },
     BUY_NOW: {
-      SUCCED: '상품 바로 구매에 성공했습니다.',
+      SUCCEED: '상품 바로 구매에 성공했습니다.',
+    },
+    GET_ORDER_LIST: {
+      SUCCEED: '주문 목록 조회에 성공했습니다.',
     },
   },
 };
