@@ -36,13 +36,15 @@ export class PaymentController {
     try {
       const { userId, points } = req.user;
       const { goodsOptionId } = req.params;
-      const { quantity } = req.body;
+      const { quantity, address, phone } = req.body;
 
       const purchasedItem = await this.paymentService.buyNow(
         userId,
         points,
         goodsOptionId,
-        quantity
+        quantity,
+        address,
+        phone
       );
 
       const orderResponseDto = new OrderResponseDto(purchasedItem);

@@ -64,7 +64,7 @@ export class PaymentService {
   };
 
   // 바로구매
-  buyNow = async (userId, points, goodsOptionId, quantity) => {
+  buyNow = async (userId, points, goodsOptionId, quantity, address, phone) => {
     // 상품 정보 불러오기
     const item = await this.paymentRepository.findItemById(goodsOptionId);
 
@@ -89,7 +89,9 @@ export class PaymentService {
       userId,
       totalPrice,
       goodsOptionId,
-      quantity
+      quantity,
+      address,
+      phone
     );
 
     return paidItem;

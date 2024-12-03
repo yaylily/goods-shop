@@ -82,7 +82,14 @@ export class PaymentRepository {
   };
 
   // 바로주문 트랜젝션
-  buyNow = async (userId, totalPrice, goodsOptionId, quantity) => {
+  buyNow = async (
+    userId,
+    totalPrice,
+    goodsOptionId,
+    quantity,
+    address,
+    phone
+  ) => {
     return await prisma.$transaction(async (prisma) => {
       // 포인트 차감
       await prisma.user.update({
@@ -101,7 +108,7 @@ export class PaymentRepository {
 
       // 주문 정보 생성
       const order = await prisma.order.create({
-        data: { userId, totalPrice },
+        data: { userId, totalPrice, address, phone },
       });
 
       await prisma.orderItem.create({
