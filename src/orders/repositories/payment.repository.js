@@ -51,7 +51,7 @@ export class PaymentRepository {
 
       // 결제 기록 추가
       const order = await prisma.order.create({
-        data: { userId, totalPrice, address, phone },
+        data: { userId, totalPrice, address, phone, status: 'PAID' },
       });
 
       const orderItems = cartItems.map((item) => ({
@@ -108,7 +108,7 @@ export class PaymentRepository {
 
       // 주문 정보 생성
       const order = await prisma.order.create({
-        data: { userId, totalPrice, address, phone },
+        data: { userId, totalPrice, address, phone, status: 'PAID' },
       });
 
       await prisma.orderItem.create({
