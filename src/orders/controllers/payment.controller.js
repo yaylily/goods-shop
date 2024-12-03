@@ -10,10 +10,13 @@ export class PaymentController {
   purchaseCartItems = async (req, res, next) => {
     try {
       const { userId, points } = req.user;
+      const { address, phone } = req.body;
 
       const purchasedCartItems = await this.paymentService.purchaseCartItems(
         userId,
-        points
+        points,
+        address,
+        phone
       );
 
       const orderResponseDto = new OrderResponseDto(purchasedCartItems);
@@ -33,13 +36,15 @@ export class PaymentController {
     try {
       const { userId, points } = req.user;
       const { goodsOptionId } = req.params;
-      const { quantity } = req.body;
+      const { quantity, address, phone } = req.body;
 
       const purchasedItem = await this.paymentService.buyNow(
         userId,
         points,
         goodsOptionId,
-        quantity
+        quantity,
+        address,
+        phone
       );
 
       const orderResponseDto = new OrderResponseDto(purchasedItem);
@@ -61,10 +66,14 @@ export class PaymentController {
 
       const OrderList = await this.paymentService.getOrderList(userId);
 
+      const orderListResponseDto = OrderList.map(
+        (order) => new OrderResponseDto(order)
+      );
+
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: MESSAGES.PAYMENT.GET_ORDER_LIST.SUCCEED,
-        data: OrderList,
+        data: orderListResponseDto,
       });
     } catch (err) {
       next(err);

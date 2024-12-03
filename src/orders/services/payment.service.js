@@ -6,7 +6,7 @@ export class PaymentService {
   paymentRepository = new PaymentRepository();
 
   // 장바구니 상품 구매
-  purchaseCartItems = async (userId, points) => {
+  purchaseCartItems = async (userId, points, address, phone) => {
     // 장바구니가 존재하는지 확인
     const cart = await this.paymentRepository.findCartById(userId);
 
@@ -54,6 +54,8 @@ export class PaymentService {
     const paidItems = await this.paymentRepository.purchaseCartItems(
       userId,
       totalPrice,
+      address,
+      phone,
       cart.cartId,
       cartItems
     );
@@ -62,7 +64,7 @@ export class PaymentService {
   };
 
   // 바로구매
-  buyNow = async (userId, points, goodsOptionId, quantity) => {
+  buyNow = async (userId, points, goodsOptionId, quantity, address, phone) => {
     // 상품 정보 불러오기
     const item = await this.paymentRepository.findItemById(goodsOptionId);
 
@@ -87,7 +89,9 @@ export class PaymentService {
       userId,
       totalPrice,
       goodsOptionId,
-      quantity
+      quantity,
+      address,
+      phone
     );
 
     return paidItem;

@@ -165,6 +165,15 @@ export const MESSAGES = {
       INSUFFICIENT_POINTS: '보유한 포인트가 부족합니다.',
       INSUFFICIENT_STOCK: (goodsName) =>
         `상품 ${goodsName}의 재고가 부족합니다.`,
+      ADDRESS: {
+        REQUIRED: '배송 주소를 입력해주세요.',
+      },
+      PHONE: {
+        REQUIRED: '배송 연락처를 입력해주세요.',
+      },
+      QUANTITY: {
+        REQUIRED: '주문 상품 수량을 입력해주세요.',
+      },
     },
     PURCHASE_CART_ITEMS: {
       SUCCEED: '장바구니 상품 구매에 성공했습니다.',
