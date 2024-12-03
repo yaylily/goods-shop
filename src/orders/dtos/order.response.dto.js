@@ -8,7 +8,6 @@ export class OrderItemResponseDto {
     quantity,
     createdAt,
     updatedAt,
-    goodsOption,
   }) {
     this.orderItemId = orderItemId;
     this.orderId = orderId;
@@ -18,7 +17,6 @@ export class OrderItemResponseDto {
     this.quantity = quantity;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.goodsOption = goodsOption;
   }
 }
 
@@ -29,6 +27,7 @@ export class OrderResponseDto {
     totalPrice,
     address,
     phone,
+    status,
     createdAt,
     updatedAt,
     orderItems,
@@ -38,6 +37,7 @@ export class OrderResponseDto {
     this.totalPrice = totalPrice;
     this.address = address;
     this.phone = phone;
+    this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.orderItems = orderItems.map((item) => new OrderItemResponseDto(item));

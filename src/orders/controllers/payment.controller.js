@@ -66,10 +66,14 @@ export class PaymentController {
 
       const OrderList = await this.paymentService.getOrderList(userId);
 
+      const orderListResponseDto = OrderList.map(
+        (order) => new OrderResponseDto(order)
+      );
+
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: MESSAGES.PAYMENT.GET_ORDER_LIST.SUCCEED,
-        data: OrderList,
+        data: orderListResponseDto,
       });
     } catch (err) {
       next(err);
