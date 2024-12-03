@@ -2,6 +2,7 @@ import express from 'express';
 import { requireToken } from '../../middlewares/require-token.middleware.js';
 import { PaymentController } from '../controllers/payment.controller.js';
 import { BuyNowDTO } from '../dtos/buy-now.dto.js';
+import { PurchaseCartItemsDTO } from '../dtos/purchase-cart-items.dto.js';
 
 const paymentRouter = express.Router();
 const paymentController = new PaymentController();
@@ -10,6 +11,7 @@ const paymentController = new PaymentController();
 paymentRouter.post(
   '/carts/checkout',
   requireToken('access'),
+  PurchaseCartItemsDTO,
   paymentController.purchaseCartItems
 );
 

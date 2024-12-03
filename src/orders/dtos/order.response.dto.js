@@ -36,6 +36,8 @@ export class OrderResponseDto {
     this.orderId = orderId;
     this.userId = userId;
     this.totalPrice = totalPrice;
+    this.address = address;
+    this.phone = phone;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.orderItems = orderItems.map((item) => new OrderItemResponseDto(item));
