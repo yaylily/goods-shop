@@ -6,7 +6,7 @@ export class PaymentService {
   paymentRepository = new PaymentRepository();
 
   // 장바구니 상품 구매
-  purchaseCartItems = async (userId, points) => {
+  purchaseCartItems = async (userId, points, address, phone) => {
     // 장바구니가 존재하는지 확인
     const cart = await this.paymentRepository.findCartById(userId);
 
@@ -54,6 +54,8 @@ export class PaymentService {
     const paidItems = await this.paymentRepository.purchaseCartItems(
       userId,
       totalPrice,
+      address,
+      phone,
       cart.cartId,
       cartItems
     );

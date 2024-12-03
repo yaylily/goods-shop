@@ -27,6 +27,8 @@ export class OrderResponseDto {
     orderId,
     userId,
     totalPrice,
+    address,
+    phone,
     createdAt,
     updatedAt,
     orderItems,

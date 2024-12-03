@@ -10,10 +10,13 @@ export class PaymentController {
   purchaseCartItems = async (req, res, next) => {
     try {
       const { userId, points } = req.user;
+      const { address, phone } = req.body;
 
       const purchasedCartItems = await this.paymentService.purchaseCartItems(
         userId,
-        points
+        points,
+        address,
+        phone
       );
 
       const orderResponseDto = new OrderResponseDto(purchasedCartItems);

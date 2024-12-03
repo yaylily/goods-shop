@@ -21,7 +21,14 @@ export class PaymentRepository {
   };
 
   // 장바구니 구매 트렌젝션
-  purchaseCartItems = async (userId, totalPrice, cartId, cartItems) => {
+  purchaseCartItems = async (
+    userId,
+    totalPrice,
+    address,
+    phone,
+    cartId,
+    cartItems
+  ) => {
     return prisma.$transaction(async (prisma) => {
       // 포인트 차감
       await prisma.user.update({
@@ -44,13 +51,13 @@ export class PaymentRepository {
 
       // 결제 기록 추가
       const order = await prisma.order.create({
-        data: { userId, totalPrice },
+        data: { userId, totalPrice, address, phone },
       });
 
       const orderItems = cartItems.map((item) => ({
         orderId: order.orderId,
         goodsOptionId: item.goodsOptionId,
-        goodsOptionName: item.goodsOptionName,
+        goodsOptionName: item.goodsOption.optionName,
         goodsPrice: item.goodsOption.addPrice + item.goodsOption.goods.price,
         quantity: item.quantity,
       }));
