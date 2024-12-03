@@ -84,9 +84,12 @@ export class PaymentRepository {
       });
 
       // 재고 조정
-      await prisma.goodsOption.update({
+      const item = await prisma.goodsOption.update({
         where: { goodsOptionId: +goodsOptionId },
         data: { stock: { decrement: quantity } },
+        select: {
+          optionName: true,
+        },
       });
 
       // 주문 정보 생성
@@ -98,6 +101,7 @@ export class PaymentRepository {
         data: {
           orderId: order.orderId,
           goodsOptionId: +goodsOptionId,
+          goodsOptionName: item.optionName,
           goodsPrice: totalPrice,
           quantity,
         },
@@ -115,6 +119,7 @@ export class PaymentRepository {
   getOrderList = async (userId) => {
     return await prisma.order.findMany({
       where: { userId },
+      include: { orderItems: true },
     });
   };
 }

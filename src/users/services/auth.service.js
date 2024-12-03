@@ -12,7 +12,6 @@ import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
 } from '../../constant/env.constant.js';
-import { prisma } from '../../utils/prisma.util.js';
 
 export class AuthService {
   authRepository = new AuthRepository();
