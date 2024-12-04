@@ -2,6 +2,7 @@ import { HTTP_STATUS } from '../../constant/http-status.constant.js';
 import { MESSAGES } from '../../constant/message.constant.js';
 import { PaymentService } from '../services/payment.service.js';
 import { OrderResponseDto } from '../dtos/order.response.dto.js';
+import { CanceledOrderResponseDto } from '../dtos/canceled-order.response.dto.js';
 
 export class PaymentController {
   paymentService = new PaymentService();
@@ -74,6 +75,31 @@ export class PaymentController {
         status: HTTP_STATUS.OK,
         message: MESSAGES.PAYMENT.GET_ORDER_LIST.SUCCEED,
         data: orderListResponseDto,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // 주문 취소
+  cancelOrder = async (req, res, next) => {
+    try {
+      const { orderId } = req.params;
+      const { userId } = req.user;
+
+      const canceledOrder = await this.paymentService.cancelOrder(
+        orderId,
+        userId
+      );
+
+      const canceledOrderResponseDto = new CanceledOrderResponseDto(
+        canceledOrder
+      );
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.PAYMENT.CANCEL_ORDER.SUCCEED,
+        data: canceledOrderResponseDto,
       });
     } catch (err) {
       next(err);

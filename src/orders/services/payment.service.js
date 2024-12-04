@@ -101,4 +101,18 @@ export class PaymentService {
   getOrderList = async (userId) => {
     return await this.paymentRepository.getOrderList(userId);
   };
+
+  // 주문 취소
+  cancelOrder = async (orderId, userId) => {
+    // 주문이 존재하는지 확인
+    const order = await this.paymentRepository.findOrderById(orderId);
+
+    if (!order) {
+      throw new HttpError.NotFound(
+        MESSAGES.PAYMENT.CANCEL_ORDER.NOT_FOUND_ORDER
+      );
+    }
+
+    return await this.paymentRepository.cancelOrder(orderId, userId);
+  };
 }

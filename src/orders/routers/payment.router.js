@@ -26,4 +26,11 @@ paymentRouter.post(
 // 구매 목록 조회
 paymentRouter.get('/', requireToken('access'), paymentController.getOrderList);
 
+// 주문 취소
+paymentRouter.patch(
+  '/orders/:orderId',
+  requireToken('access'),
+  paymentController.cancelOrder
+);
+
 export { paymentRouter };

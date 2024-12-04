@@ -186,5 +186,9 @@ export const MESSAGES = {
     GET_ORDER_LIST: {
       SUCCEED: '주문 목록 조회에 성공했습니다.',
     },
+    CANCEL_ORDER: {
+      SUCCEED: '주문 취소에 성공했습니다.',
+      NOT_FOUND_ORDER: '해당 주문을 찾을 수 없습니다.',
+    },
   },
 };
