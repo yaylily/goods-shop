@@ -136,4 +136,41 @@ export class PaymentRepository {
       include: { orderItems: true },
     });
   };
+
+  // 주문 찾기
+  findOrderById = async (orderId) => {
+    return await prisma.order.findUnique({
+      where: { orderId: +orderId },
+    });
+  };
+
+  // 주문 취소 transaction
+  cancelOrder = async (orderId, userId) => {
+    return await prisma.$transaction(async (prisma) => {
+      // 주문 상태 변경
+      const order = await prisma.order.update({
+        where: { orderId: +orderId },
+        data: { status: 'REFUNDED' },
+      });
+
+      // 포인트 반환
+      await prisma.user.update({
+        where: { userId },
+        data: { points: { increment: order.totalPrice } },
+      });
+
+      // 재고 반환
+      const orderItems = await prisma.orderItem.findMany({
+        where: { orderId: +orderId },
+      });
+
+      for (let item of orderItems) {
+        await prisma.goodsOption.update({
+          where: { goodsOptionId: item.goodsOptionId },
+          data: { stock: { increment: item.quantity } },
+        });
+      }
+      return order;
+    });
+  };
 }
