@@ -4,10 +4,11 @@ import { HTTP_STATUS } from './constant/http-status.constant.js';
 import { errorHandler } from './middlewares/error-handler.middleware.js';
 import './utils/prisma.util.js';
 import router from './router/router.js';
+import LogMiddleware from './middlewares/log.middleware.js';
 
 const app = express();
 
-// app.use(LogMiddleware);
+app.use(LogMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
