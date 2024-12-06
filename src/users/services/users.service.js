@@ -34,4 +34,9 @@ export class UsersService {
 
     return updatedUser;
   };
+
+  // 포인트 로그 조회
+  getPointsLog = async (userId) => {
+    return await this.userRepository.getPointsLog(userId);
+  };
 }

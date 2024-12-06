@@ -34,17 +34,24 @@ enum Role {
 }
 
 model PointsLog {
-  logId     Int      @id @default(autoincrement()) @map("log_id")
-  userId    Int      @map("user_id")
-  orderId   Int      @unique @map("order_id")
+  logId     Int           @id @default(autoincrement()) @map("log_id")
+  userId    Int           @map("user_id")
+  orderId   Int           @map("order_id")
+  type      PointsLogType
   points    Int
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
 
   user  User  @relation(fields: [userId], references: [userId])
-  order Order @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  order Order @relation(fields: [orderId], references: [orderId])
 
   @@map("points_logs")
+}
+
+enum PointsLogType {
+  ADD_POINTS
+  ORDER
+  ORDER_CANCEL
 }
 
 model Cart {
@@ -85,7 +92,7 @@ model Order {
 
   user       User        @relation(fields: [userId], references: [userId])
   orderItems OrderItem[]
-  pointsLog  PointsLog?
+  PointsLog  PointsLog[]
 
   @@map("orders")
 }

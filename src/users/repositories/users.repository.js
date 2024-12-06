@@ -24,4 +24,12 @@ export class UsersRepository {
 
     return updatedUser;
   };
+
+  // 포인트로그 조회
+  getPointsLog = async (userId) => {
+    return await prisma.pointsLog.findMany({
+      where: { userId: +userId },
+      orderBy: { createdAt: 'desc' },
+    });
+  };
 }
