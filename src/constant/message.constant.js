@@ -57,6 +57,9 @@ export const MESSAGES = {
     UPDATE_ME: {
       SUCCEED: '내정보 수정에 성공했습니다.',
     },
+    GET_POINTS_LOGS: {
+      SUCCEED: '포인트 로그 조회에 성공했습니다.',
+    },
   },
   GOODS: {
     COMMON: {

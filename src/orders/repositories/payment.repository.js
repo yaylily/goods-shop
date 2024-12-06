@@ -54,6 +54,16 @@ export class PaymentRepository {
         data: { userId, totalPrice, address, phone, status: 'PAID' },
       });
 
+      // 포인트 로그 기록
+      await prisma.pointsLog.create({
+        data: {
+          userId,
+          orderId: order.orderId,
+          type: 'ORDER',
+          points: -totalPrice,
+        },
+      });
+
       const orderItems = cartItems.map((item) => ({
         orderId: order.orderId,
         goodsOptionId: item.goodsOptionId,
@@ -111,6 +121,16 @@ export class PaymentRepository {
         data: { userId, totalPrice, address, phone, status: 'PAID' },
       });
 
+      // 포인트 로그 기록
+      await prisma.pointsLog.create({
+        data: {
+          userId,
+          orderId: order.orderId,
+          type: 'ORDER',
+          points: -totalPrice,
+        },
+      });
+
       await prisma.orderItem.create({
         data: {
           orderId: order.orderId,
@@ -157,6 +177,16 @@ export class PaymentRepository {
       await prisma.user.update({
         where: { userId },
         data: { points: { increment: order.totalPrice } },
+      });
+
+      // 포인트 로그 기록
+      await prisma.pointsLog.create({
+        data: {
+          userId,
+          orderId: +orderId,
+          type: 'ORDER_CANCEL',
+          points: order.totalPrice,
+        },
       });
 
       // 재고 반환

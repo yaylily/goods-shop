@@ -17,4 +17,11 @@ usersRouter.patch(
   usersController.updateMe
 );
 
+// 포인트 로그 조회
+usersRouter.get(
+  '/me/pointsLog',
+  requireToken('access'),
+  usersController.getPointsLog
+);
+
 export { usersRouter };

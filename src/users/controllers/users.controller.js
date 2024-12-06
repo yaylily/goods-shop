@@ -48,4 +48,21 @@ export class UsersController {
       next(err);
     }
   };
+
+  // 포인트 로그 조회
+  getPointsLog = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      const pointsLogs = await this.usersService.getPointsLog(userId);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.USERS.GET_POINTS_LOGS.SUCCEED,
+        data: pointsLogs,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
